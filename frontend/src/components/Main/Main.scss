@@ -1,0 +1,37 @@
+.feed {
+    padding-top: 32px;
+}
+
+.tags-list {
+    display: flex;
+    flex-flow: row wrap;
+}
+
+.feed .article-preview {
+    width: calc(33% - 50px);
+    margin-right: 50px;
+}
+
+.main-article h2, .main-article h3, .main-article h4 {
+    font-weight: 400;
+    text-align: center;
+    margin-top: 24px;
+    margin-bottom: 8px;
+}
+
+
+
+@media screen and (max-width: 992px) {
+    .feed .article-preview {
+        width: calc(50% - 30px);
+        margin-right: 30px;
+    }
+}
+
+@media screen and (max-width: 576px) {
+    .feed .article-preview {
+        width: 100%;
+        margin-right: 0;
+    }
+}
+

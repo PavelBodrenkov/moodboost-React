@@ -1,0 +1,56 @@
+.popup {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    font-family: 'inter', 'arial', sans-serif;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    visibility: collapse;
+    transition: all 0.5s;
+        &__container {
+            max-width:430px;
+            max-width: 100%;
+            width: 30%;
+            height: 20%;
+            background-color:white;
+            position: relative;
+            padding: 36px;
+            border-radius: 10px;
+            box-sizing: border-box;
+        }
+        &__form {
+            display: flex;
+            flex-direction: column;
+        }
+}
+
+input[name=name] {
+    width: 100%;
+    height: 50px;
+    margin-bottom: 10px;
+    border:none;
+    box-shadow: 0 0 5px rgba(158, 157, 157, 0.815) inset;
+}
+input[name=slug] {
+    width: 100%;
+    height: 50px;
+    margin-bottom: 20px;
+    border:none;
+    box-shadow: 0 0 5px rgba(158, 157, 157, 0.815) inset;
+}
+
+label[name=name] {
+    display: flex;
+    flex-direction: column;
+}
+
+.open-popup {
+    opacity: 1;
+    visibility: visible;
+  }
+  

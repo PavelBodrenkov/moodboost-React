@@ -1,0 +1,25 @@
+.feed__searching {
+    width: 66%;
+}
+.form-group {
+    position: relative;
+        & input {
+            padding: 5px 15px 5px 45px;
+            border: 1px solid #e7e7e7;
+            background-color: #fff;
+            border-radius: 3px;
+            transition: all .07s ease-out;
+            width: 100%;
+        }
+}
+
+.form-group [class*=icon-] {
+    position: absolute;
+    top: 50%;
+    left: 15px;
+    transform: translateY(-50%);
+}
+
+.icon-search:before {
+    content: "\E90E";
+}

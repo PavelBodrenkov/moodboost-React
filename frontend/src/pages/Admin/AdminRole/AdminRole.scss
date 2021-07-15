@@ -1,0 +1,64 @@
+.adminRole{
+    width: 100%;
+    height: 95vh;
+    overflow-y: auto;
+    &__container {
+        // height: 90%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        overflow-y: hidden;
+       
+    }
+    &__header {
+        display: flex;
+        // margin-bottom: 5%;
+        position: fixed;
+        top:0;
+        width: 100%;
+        height: 6%;
+        align-items: center;
+        background-color: white;
+        & h2 {
+            font-size: 20px;
+            color: #54575a;
+            margin-right: 10px;
+            margin-left: 30px;
+        }
+    }
+    &__wrapper {
+        display: flex;
+        justify-content: space-between;
+        background-color: rgba(186, 186, 186, 0.367);
+        align-items: center;
+        padding: 10px 0 10px 0;
+        max-width: 90%;
+        margin: 30px auto 0 auto;
+        
+        & p {
+            color: #6c7680;
+            margin:0 10px 0 10px;
+        }
+    }&__name {
+        display: flex;
+        align-items: center;
+        & p {
+        color: #6c7680;
+        margin:0 10px 0 10px;
+        }
+    }
+}
+
+.btn {
+    width: 150px;
+    margin-right: 10px;
+}
+
+.role-container {
+    height: 40%;
+    box-shadow: 0 0px 10px rgb(189, 202, 189);
+    overflow-y: auto;
+    margin-top: 80px;
+}
+
+

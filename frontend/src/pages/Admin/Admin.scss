@@ -1,0 +1,32 @@
+
+.admin {
+    display: flex;
+    
+    &__Logo{
+        padding:20px 0 20px 0;
+        background-color: rgb(66, 141, 247);
+        color:white;
+        text-align: center;
+        margin-bottom: 10px;
+    }
+    &__navBar {
+        display: flex;
+        flex-direction: column;
+        &_link {
+            color: rgb(145, 143, 143);;
+            text-decoration: none;
+            padding: 20px 0 20px 6px;
+            &:hover {
+                background-color: rgb(138, 137, 137);
+                color:white;
+            }
+        }
+    }
+}
+.navBar-container {
+    background-color: rgb(72, 72, 72);
+    min-width: 10%;
+    height:100vh;
+    flex-shrink: 0;
+}
+
