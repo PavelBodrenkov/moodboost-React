@@ -26,8 +26,10 @@ mongoose.connect('mongodb://localhost:27017/moodboostdb', {
   useUnifiedTopology: true,
 });
 
+
+
 // app.use(limiter);
-app.use('/uploads', express.static('uploads'))
+app.use('/storage/posts', express.static('storage/posts'))
 app.use(helmet());
 app.use(cors());
 app.use(bodyParser.json());
@@ -36,12 +38,19 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.post('/upload',MultipartMiddleWare,(req,res) => {
   let tempFile = req.files.upload;
     let path = tempFile.path;
-
     res.status(200).json({
         uploaded: true,
         url: `http://localhost:3000/${path}`
     })
 })
+
+
+
+
+
+
+
+
 
 app.use(indexRouter);
 

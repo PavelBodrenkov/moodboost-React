@@ -1,7 +1,10 @@
 const Post = require('./../models/post');
 const NotFoundError = require('../errors/not-found-err.js');
 const ForbiddenError = require('../errors/forbidden-err.js');
-
+const sharp  = require('sharp')
+const moment = require('moment');
+const path = require('path')
+const fs = require("fs");
 
 const getPosts = (req,res,next) => {
     Post.find({})
@@ -10,9 +13,13 @@ const getPosts = (req,res,next) => {
 }
 
 const getByCategoriesId = (req,res, next) => {
+  
     Post.find({
-        category_id: req.params.categoryId,
+        // category_id: req.params.categoryId,
         // owner: req.user._id
+        category:{
+        category_id:req.params.categoryId
+        }
     })
     .then((posts) => res.send(posts))
     .catch(next)
@@ -26,9 +33,19 @@ const getPost = (req, res, next) => {
 
 const createPost = (req, res, next) => {
     const {title, seo_title, excerpt, body, slug, meta_description, meta_keywords, status, featured, views} = req.body;
+    const date = moment().format('DDMMYYYY-HHmmss_SSS')
+     let compressorImage = path.join(__dirname, '../', 'storage', '/', 'posts', req.file.originalname.split('.').slice(0, -1).join('.') + "-" + 'cropped'+'.jpg')
+   
+    sharp(req.file.path).resize(640).jpeg({
+        quality:80,
+        chromaSubsampling:'4:4:4'
+    }).toFile(compressorImage)
+
     Post.create({owner: req.user._id, category:req.body.category, image: req.file ? req.file.path : '', title, seo_title, excerpt, body, slug, meta_description, meta_keywords, status, featured, views})
     .then((post) => res.status(201).send(post))
     .catch(next)
+
+    
 }
 
 
@@ -36,10 +53,21 @@ const deletePost = (req, res, next) => {
     Post.findById(req.params.id)
     .orFail(new NotFoundError('Пост не найден'))
     .then((post) => {
-        console.log(post)
-        console.log(req.user._id)
         if(req.user._id.toString() === post.owner.toString()) {
-            return post.remove()
+            fs.unlink(post.image, (err) => {
+                if (err) {
+                  console.error(err);
+                }
+                console.log("File removed");
+              });
+    
+            fs.unlink(post.image.split('.').slice(0, -1).join('.') + "-" + 'cropped'+'.jpg', (err) => {
+                if (err) {
+                  console.error(err);
+                }
+                console.log("File removed");
+              });
+             return post.remove()
             .then(() => res.send({message: "Пост удален"}))
         }
         throw new ForbiddenError('Нельзя удалять чужие посты');
@@ -50,8 +78,6 @@ const deletePost = (req, res, next) => {
 
 
 const updatePost = (req, res, next) => {
-    let date = Date.now();
-
     const updated = {
         category:req.body.category,
         title: req.body.title, 
@@ -64,7 +90,7 @@ const updatePost = (req, res, next) => {
         status:req.body.status, 
         featured:req.body.featured,
         views:req.body.views,
-        updated_at: req.body.updated_at = date.getTime()/1000
+        updated_at: req.body.updated_at = Date.now()
     }
 
     if(req.file) {

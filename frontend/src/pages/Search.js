@@ -14,8 +14,9 @@ const Search = observer(() => {
     const location = useLocation()
 
     useEffect(() => {
-        fetchCategory().then(data => category.setCategory(data.data))
-        fetchPost().then(data => post.setPosts(data.data))
+        const token = localStorage.getItem("adminToken")
+        fetchCategory(token).then(data => category.setCategory(data.data))
+        fetchPost(token).then(data => post.setPosts(data.data))
     }, [])
 
     useEffect(() => {

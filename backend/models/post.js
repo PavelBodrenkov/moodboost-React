@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const moment = require('moment');
 
 
 
@@ -38,6 +39,10 @@ const postSchema = mongoose.Schema({
         required:true
     },
     image: {
+        type:String,
+        default: ''
+    },
+    image2: {
         type:String,
         default: ''
     },

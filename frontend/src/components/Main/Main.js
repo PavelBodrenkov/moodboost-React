@@ -22,7 +22,6 @@ const Main = observer(({man}) => {
     useEffect(() => {
         const token = localStorage.getItem("adminToken")
         if(target) {
-           
             fetchAllDeviceCategory(category.selectedCategory._id, token).then(data => post.setPosts(data.data))
         } else {
             fetchPost(token).then(data => post.setPosts(data.data))
@@ -50,13 +49,9 @@ const Main = observer(({man}) => {
                 </div>
                
                 {block && man.map((card, index) => {
-                    console.log(card)
-                    
-                        return(
-                            
+                        return(  
                         <Card card={card} key={index} />
                     )
-                        
                     })
                 }
             </div>
