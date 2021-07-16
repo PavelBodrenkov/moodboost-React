@@ -42,10 +42,6 @@ const postSchema = mongoose.Schema({
         type:String,
         default: ''
     },
-    image2: {
-        type:String,
-        default: ''
-    },
     slug: {
         type: String,
         required: true

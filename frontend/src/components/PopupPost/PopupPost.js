@@ -142,20 +142,6 @@ const PopupPost = observer(() => {
     }
 
     const[val, setVal] = useState('')
-console.log(post.categoryId)
-console.log(post.postCategory)
-console.log(post.title)
-console.log(post.bodyPost)
-console.log(post.slug)
-console.log(post.statusPost)
-console.log(post.file)
-console.log(post.views)
-console.log(post.description)
-console.log(post.keyWord)
-console.log(post.seoTitle)
-console.log(post.appEditPost)
-console.log(val)
-
 
 function handleChange(e) {
     var index = e.target.selectedIndex;

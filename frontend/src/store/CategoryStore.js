@@ -54,7 +54,7 @@ export default class UserStore {
         return this._selectedCategory
     }
     
-    get EmilCategory () {
+    get emilCategory () {
         return this._EmilCategory
     }
 

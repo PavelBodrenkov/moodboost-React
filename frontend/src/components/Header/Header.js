@@ -4,6 +4,7 @@ import { Link} from 'react-router-dom';
 import menu from '../../image/menu.svg'
 import { LIFE_ROUTE, MAINPOSTS_ROUTE, SEARCH_ROUTE } from '../../utils/consts';
 import {fetchPostCategory, fetchApiEmilCategories} from '../../http/categoryAPI'
+import {fetchApiEmil} from '../../http/postAPI';
 import { useEffect } from 'react';
 import { observer } from 'mobx-react-lite';
 import { fetchCreatePost } from "../../http/postAPI";
@@ -13,6 +14,7 @@ import { Context } from "./../../index";
 
 const Header = observer(() => {
 const {category} = useContext(Context)
+const {post} = useContext(Context)
 const[file, setFile] = useState(null)
 
 // function createCategory () {
@@ -29,32 +31,48 @@ const[file, setFile] = useState(null)
 //     })
     
 // }
+// function createPost (e) {
+//     e.preventDefault()
+//     const token = localStorage.getItem("adminToken")
+//     const formData = new FormData()
+//     formData.append('category[category_id]', post.categoryId)
+//     formData.append('category[name]', post.postCategory)
+//     formData.append('title', post.title)
+//     formData.append('body', post.bodyPost)
+//     formData.append('slug', post.slug)
+//     formData.append('status', post.statusPost)
+//     formData.append('image', post.file)
+//     formData.append('views', post.views)
+//     formData.append('meta_description', post.description)
+//     formData.append('meta_keywords', post.keyWord)
+//     formData.append('seo_title', post.seoTitle)
+//     fetchCreatePost(formData, token).then(data => {post.setAddPost(data.data); closePopup()})
+//     e.target.reset()
+// }
 
-function createPost () {
-    // const formData = new FormData()
-    // formData.append('category_id', '60e6ca99ba872c46282d7576')
-    // formData.append('title', 'hjfghjfghj')
-    // formData.append('body', 'dfghdfghfgh')
-    // formData.append('slug', 'dfghfghfg')
-    // formData.append('status', 'dfghdfgh')
-    // formData.append('image', file)
+
+function createPost (e) {
+    e.preventDefault()
+    const token = localStorage.getItem("adminToken")
     
+    category.emilCategory.forEach((post) => {
     const formData = new FormData()
-    // fetchCreatePost('60e6ca99ba872c46282d7576', 'hjfghjfghj', 'fghdfghfg', 'dfghdfgh', 'dfghdfghfgh', 'dfghfghfg', 'dfghdfghd', 'dfghdfgh', 'dfghdfgh', 2).then(data => console.log(data))
-    category.EmilCategory.forEach((post) => {
-        formData.append('category_id', post.category.id)
-        formData.append('title', post.title)
-        formData.append('body', post.body)
-        formData.append('slug', post.slug)
-        formData.append('status', 'dfghdfgh')
-        formData.append('image', post.thumbniels.cropped)
+    formData.append('category[category_id]', post.category.id)
+    formData.append('title', post.title)
+    formData.append('body', post.body)
+    formData.append('slug', post.slug)
+    formData.append('status', post.status)
+    // formData.append('image', post.thumbnails.cropped)
+    fetchCreatePost(formData, token).then(data => console.log(data))
     })
-    fetchCreatePost(formData).then(data => console.log(data))
+   
 }
 
 useEffect(() => {
-    fetchApiEmilCategories().then(data => category.setEmilCategory(data.data.categories))
+    fetchApiEmil().then(data => category.setEmilCategory(data.data.articles))
 }, [])
+
+console.log(category.emilCategory)
 
 
 function selectFile (e) {
@@ -77,10 +95,10 @@ function selectFile (e) {
                             {/* <li>
                                 <button onClick={() => createCategory()} >Добавить категорию</button>
                                 <input onChange={ selectFile} type="file" />
-                            </li>
-                            <li>
-                                <button onClick={() => createPost()} >Добавить карточку</button>
                             </li> */}
+                            <li>
+                                <button onClick={(e) => createPost(e)} >Добавить карточку</button>
+                            </li> 
                         </ul>
                         <ul className="header__navbar_menu">
                             <li className="headr__navbar_menu-li header__navbar_menu-li_search">

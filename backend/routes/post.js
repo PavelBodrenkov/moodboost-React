@@ -35,7 +35,7 @@ router.get('/:categoryId', celebrate({
 router.post('/', upload.single('image'), celebrate({
     body: Joi.object().keys({
       category:Joi.object().keys({
-        category_id:Joi.string().required().length(24).hex(),
+        category_id:Joi.string().required(),
         name:Joi.string()
       }),
       title: Joi.string().required(),
