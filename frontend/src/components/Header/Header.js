@@ -13,13 +13,23 @@ import { Context } from "./../../index";
 
 
 const Header = observer(() => {
+
+    useEffect(() => {
+        fetchApiEmil().then(data => category.setEmilCategory(data.data.articles))
+    }, [])
+
+    
+   
+
 const {category} = useContext(Context)
 const {post} = useContext(Context)
 const[file, setFile] = useState(null)
+const {aside} = useContext(Context)
 
 // function createCategory () {
+//     const token = localStorage.getItem("adminToken")
 //     // fetchPostCategory(1, 'Animals', 'Animals').then(data => console.log(data))
-//     category.EmilCategory.forEach((category) => {
+//     category.emilCategory.forEach((category) => {
 //         let myPosts = {
 //             sort:`${category.order}`,
 //             name:category.name,
@@ -27,9 +37,13 @@ const[file, setFile] = useState(null)
 //             created_at:category.created_at,
 //             updated_at:category.updated_at
 //         }
-//         fetchPostCategory(myPosts)
+//         fetchPostCategory(myPosts, token)
 //     })
-    
+// }
+
+// useEffect(() => {
+//     fetchApiEmilCategories().then(data => category.setEmilCategory(data.data.categories))
+// }, [])
 // }
 // function createPost (e) {
 //     e.preventDefault()
@@ -50,33 +64,97 @@ const[file, setFile] = useState(null)
 //     e.target.reset()
 // }
 
+function getid (post) {
+    if(post == 3) {
+        return "60f3e2bb07f1162dd807e896"
+    } else if(post == 4) {
+        return "60f3e2bb07f1162dd807e89a"
+    } else if(post == 5) {
+        return "60f3e2bb07f1162dd807e898"
+    } else if(post == 6) {
+        return "60f3e2bb07f1162dd807e89c"
+    } else if(post == 7) {
+        //movies
+        return "60f3e2bb07f1162dd807e89e"
+    } else if(post == 8) {
+        return "60f3e2bb07f1162dd807e8a0"
+    } else if(post == 9) {
+        return "60f3e2bb07f1162dd807e8a8"
+    } else if(post == 10) {
+        return "60f3e2bb07f1162dd807e8aa"
+    } else if(post == 11) {
+        //technology
+        return "60f3e2bb07f1162dd807e8ac"
+    } else if(post == 12) {
+        return "60f3e2bb07f1162dd807e8ae"
+    } else if(post == 13) {
+        return "60f3e2bb07f1162dd807e8b0"
+    }else if(post == 14) {
+        return "60f3e2bb07f1162dd807e8b2"
+    } else if(post == 15) {
+        return "60f3e2bb07f1162dd807e8ba"
+    } else if(post == 16) {
+        return "60f3e2bb07f1162dd807e8bc"
+    } else if(post == 17) {
+        return "60f3e2bb07f1162dd807e8be"
+    } else if(post == 18) {
+        return "60f3e2bb07f1162dd807e8c0"
+    } else if(post == 22) {
+        return "60f3e2bb07f1162dd807e8c2"
+    } else if(post == 32) {
+        return "60f3e2bb07f1162dd807e8c4"
+    } else if(post == 33) {
+        //selebrity
+        return "60f3e2bb07f1162dd807e8c7"
+    }
+    
+}
+
+function stsuse (status) {
+    if(status == "PUBLISHED") {
+        return "Опубликовано"
+    }
+}
+
+// srci.split('-').slice(0,1).join('').slice(21) + '.' + srci.split('-')[1].split('.')[1]
 
 function createPost (e) {
     e.preventDefault()
-    const token = localStorage.getItem("adminToken")
-    
-    category.emilCategory.forEach((post) => {
-    const formData = new FormData()
-    formData.append('category[category_id]', post.category.id)
-    formData.append('title', post.title)
-    formData.append('body', post.body)
-    formData.append('slug', post.slug)
-    formData.append('status', post.status)
-    // formData.append('image', post.thumbnails.cropped)
-    fetchCreatePost(formData, token).then(data => console.log(data))
-    })
-   
+        const token = localStorage.getItem("adminToken")
+        category.emilCategory.forEach((post) => {
+        const formData = new FormData()
+        formData.append('category[category_id]', getid(post.category_id))
+        formData.append('category[name]', post.category?.name)
+        formData.append('categoryId', getid(post.category_id))
+        formData.append('title', post.title)
+        formData.append('body', post.body)
+        formData.append('slug', post.slug)
+        formData.append('status', stsuse(post.status))
+        // formData.append('image', post.thumbnails.cropped.split('-').slice(0,1).join('').slice(21) + '.jpg')
+        formData.append('image', post.thumbnails.cropped.split('-').slice(0,1).join('').slice(21) + '.' + post.thumbnails.cropped.split('-')[1].split('.')[1])
+        formData.append('views', post.views)
+        formData.append('meta_description', post.meta_description)
+        formData.append('meta_keywords', post.meta_keywords)
+        formData.append('seo_title', post.seo_title)
+        fetchCreatePost(formData, token).then(data => console.log(data))
+       
+})
 }
 
-useEffect(() => {
-    fetchApiEmil().then(data => category.setEmilCategory(data.data.articles))
-}, [])
+// useEffect(() => {
+//     category.emilCategory.forEach((post) => {
+//         console.log(post.category_id)
+//     })
+// }, [])
 
-console.log(category.emilCategory)
 
 
 function selectFile (e) {
     setFile(e.target.files[0]) 
+}
+
+function asideHendler () {
+aside.setIsAsideOpen()
 }
 
     return(
@@ -104,7 +182,7 @@ function selectFile (e) {
                             <li className="headr__navbar_menu-li header__navbar_menu-li_search">
                                 <Link to={SEARCH_ROUTE} className="header__navbar_menu-link"><i className="icon-search"></i></Link>
                             </li>
-                            <li className="header__navbar_menu-li header__navbar_menu-li_toggler">
+                            <li onClick={() => aside.setIsAsideOpen()} className="header__navbar_menu-li header__navbar_menu-li_toggler">
                                 <a href="#" id="sidebar_toggler" className="header__navbar_menu-link">
                                     <img src={menu} />
                                 </a>

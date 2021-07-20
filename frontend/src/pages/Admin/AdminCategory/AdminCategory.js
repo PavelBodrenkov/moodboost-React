@@ -29,8 +29,6 @@ import { useLocation } from 'react-router-dom';
         }
     }
 
-    
-
 //Закрытие попапа
     useEffect(() => {
         const closeESC = (evt) => {
@@ -56,41 +54,75 @@ import { useLocation } from 'react-router-dom';
     }
 
     return(
-        <div className="adminRole">
-            <div className="adminRole__container">
-                <div className="adminRole__header">
-                    <h2>Категории</h2>
-                    <button onClick={() => openCategoryPopup(false, false)} type="button" className="btn btn-success">Добавить</button>
-                    {/* <button type="button" className="btn btn-danger">Удалить</button> */}
-                </div>
-                <div className="role-container">
-                        <div>
-                            <div className="adminRole__wrapper">
-                                <div className="adminRole__name">
-                                        <p>Имя</p>
-                                        <p>slug</p>
-                                </div>
-                                <p>Доступные действия</p>
-                            </div>
-                            { category.category.map((category) => {
-                                    return(
-                                        <div className="adminRole__wrapper adminCategories__wrapper" key={category.name}>
-                                            <div className="adminRole__name">
-                                                <p>{category.name}</p>
-                                                <p>{category.slug}</p>
-                                            </div>
-                                            <div>
-                                                <button onClick={() => openCategoryPopup(true, category._id)} type="button" className="btn btn-warning">Редактировать</button>
-                                                <button onClick={() => deleteCategory(category._id)} type="button" className="btn btn-danger">Удалить</button>
-                                            </div>
-                                        </div>
-                                    )
-                                })
-                            }
-                        </div>
-                </div>
+        // <div className="adminRole">
+        //     <div className="adminRole__container">
+        //         <div className="adminRole__header">
+        //             <h2>Категории</h2>
+        //             <button onClick={() => openCategoryPopup(false, false)} type="button" className="btn btn-success">Добавить</button>
+        //             {/* <button type="button" className="btn btn-danger">Удалить</button> */}
+        //         </div>
+        //         <div className="role-container">
+        //                 <div>
+        //                     <div className="adminRole__wrapper">
+        //                         <div className="adminRole__name">
+        //                                 <p>Имя</p>
+        //                                 <p>slug</p>
+        //                         </div>
+        //                         <p>Доступные действия</p>
+        //                     </div>
+        //                     { category.category.map((category) => {
+        //                             return(
+        //                                 <div className="adminRole__wrapper adminCategories__wrapper" key={category.name}>
+        //                                     <div className="adminRole__name">
+        //                                         <p>{category.name}</p>
+        //                                         <p>{category.slug}</p>
+        //                                     </div>
+        //                                     <div>
+        //                                         <button onClick={() => openCategoryPopup(true, category._id)} type="button" className="btn btn-warning">Редактировать</button>
+        //                                         <button onClick={() => deleteCategory(category._id)} type="button" className="btn btn-danger">Удалить</button>
+        //                                     </div>
+        //                                 </div>
+        //                             )
+        //                         })
+        //                     }
+        //                 </div>
+        //         </div>
+        //     </div>
+        //      <PopupCategory />
+        // </div>
+        <div className="scroll-table">
+            <div className="adminPost__header">
+                <h2>Категории</h2>
+                <button onClick={() => openCategoryPopup(false, false)} type="button" className="btn btn-success">Добавить</button>
             </div>
-             <PopupCategory />
+            <table>
+                <thead>
+                    <tr>
+                        <th>Имя</th>
+                        <th>slug</th>
+                        <th>Доступные действия</th>
+                    </tr>
+                </thead>
+            </table>	
+            <div className="scroll-table-body">
+                <table>
+                    <tbody>
+                    { category.category.map((category) => {
+                        return(
+                        <tr key={category._id}>
+                            <td>{category.name}</td>
+                            <td>{category.slug}</td>
+                            <td>
+                            <button onClick={() => openCategoryPopup(true, category._id)} type="button" className="btn btn-warning">Редактировать</button>
+                            <button onClick={() => deleteCategory(category._id)} type="button" className="btn btn-danger">Удалить</button>                                  
+                            </td>
+                        </tr>
+                        )
+                    })}
+                    </tbody>
+                </table>
+	        </div>
+            <PopupCategory />	
         </div>
     )
 })

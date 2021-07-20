@@ -3,45 +3,28 @@ const upload = require('../middleware/upload');
 const { celebrate, Joi } = require('celebrate');
 
 const {
-    getByCategoriesId,
     createPost,
     deletePost,
-    updatePost,
-    getPosts,
-    getPost,
-    
+    updatePost
 } = require('../controllers/post');
 
-router.get('/', getPosts)
-
-router.get('/:categoryId', celebrate({
-    params: Joi.object()
-      .keys({
-        categoryId: Joi.string().required().length(24).hex(),
-      })
-      .unknown(true),
-  }), getByCategoriesId)
-
-  router.get('/post/:id', getPost)
-    // params: Joi.object()
-    //   .keys({
-    //     id: Joi.string().required().length(24).hex(),
-    //   })
-    //   .unknown(true),
-   
 
 
+
+  
+    
 
 router.post('/', upload.single('image'), celebrate({
     body: Joi.object().keys({
       category:Joi.object().keys({
-        category_id:Joi.string().required(),
-        name:Joi.string()
+        category_id:Joi.string().required().length(24).hex(),
+        name:Joi.string().default('')
       }),
-      title: Joi.string().required(),
+      categoryId:Joi.string().required().length(24).hex(),
+      title: Joi.string().default(null),
       seo_title: Joi.string().default(null),
       except: Joi.string().default(null),
-      body: Joi.string().required(),
+      body: Joi.string().default(null),
       image: Joi.string().default(''),
       slug: Joi.string().required(),
       meta_description: Joi.string().default(null),
@@ -61,12 +44,13 @@ router.patch('/:id', upload.single('image'), celebrate({
     body: Joi.object().keys({
       category:Joi.object().keys({
         category_id:Joi.string().required().length(24).hex(),
-        name:Joi.string()
+        name:Joi.string().default('')
       }),
-      title: Joi.string().required(),
+      categoryId:Joi.string().required().length(24).hex(),
+      title: Joi.string().default(null),
       seo_title: Joi.string().default(null),
       except: Joi.string().default(null),
-      body: Joi.string().required(),
+      body: Joi.string().default(null),
       image: Joi.string().default(''),
       slug: Joi.string().required(),
       meta_description: Joi.string().default(null),

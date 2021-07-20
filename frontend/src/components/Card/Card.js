@@ -4,16 +4,15 @@ import {useHistory} from 'react-router-dom'
 import { POST_ROUTE } from '../../utils/consts';
 
 function Card ({card}) {
-
-    console.log(card.image)
     const history = useHistory()
     let cardViews = (card.views / 1000).toFixed(1)
+    //Добавить путь к карточке + урезать все до jpg как в бэкенде
+    //card.image.split('.').slice(0, -1).join('.') + "-" + 'cropped' + '.' + card.image.split('.').pop()
     return(
         <>
        {card.status === 'Опубликовано' && <article onClick={() => history.push(POST_ROUTE + '/' + card._id)} className="article-preview">
            <Link to="#">
-               <img src={process.env.REACT_APP_API_URL + card.image.split('.').slice(0, -1).join('.') + "-" + 'cropped'+'.jpg'} alt="" className="article-preview__photo"/>
-              
+               <img src={process.env.REACT_APP_API_URL + card.image.split('.').slice(0, -1).join('.') + "-" + 'cropped' + '.' + card.image.split('.').pop()} alt="" className="article-preview__photo"/>
            </Link>
            <div className="article-actions">
                 <button className="article-actions__item article-actions__item_disabled">

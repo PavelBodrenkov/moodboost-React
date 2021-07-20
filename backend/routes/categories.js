@@ -9,7 +9,7 @@ const {
     updateCategory
 } = require('./../controllers/category');
 
-router.get('/', getAllCategories)
+
 
 router.get('/:id', celebrate({
     params: Joi.object()

@@ -9,15 +9,18 @@ import {fetchAllDeviceCategory} from '../../http/postAPI';
 import { useLocation} from 'react-router-dom';
 import { fetchPost } from "../../http/postAPI";
 import { fetchCategory } from "../../http/categoryAPI";
+import CardPreloader from './../CardPreloader/CardPreloader'
 
-const Main = observer(({man}) => {
-    
+
+const Main = observer(({man, visib, isLoad}) => {
+
     const {category} = useContext(Context)
     const {post} = useContext(Context)
     const[cards, setCards] = useState([])
     const[target, setTarget] = useState(false)
     const location = useLocation();
     const [block, setBlock] = useState(true)
+    
 
     useEffect(() => {
         const token = localStorage.getItem("adminToken")
@@ -47,13 +50,13 @@ const Main = observer(({man}) => {
                         })
                     }
                 </div>
-               
-                {block && man.map((card, index) => {
+                {man.slice(0, visib).map((card, index) => {
                         return(  
-                        <Card card={card} key={index} />
+                        <Card card={card} key={card._id} />
                     )
                     })
                 }
+                {isLoad && <CardPreloader />}
             </div>
         </main>
     )

@@ -36,47 +36,86 @@ const AdminPost = observer(() => {
     }
 
     return(
-        <div className="adminPost">
-            <div className="adminRole__container">
-                <div className="adminRole__header">
-                    <h2>Статьи</h2>
-                    <button onClick={() => popup.setPopup(true)} type="button" className="btn btn-success">Добавить</button>
-                    {/* <button type="button" className="btn btn-danger">Удалить</button> */}
-                </div>
-                <div className="role-container">
-                        <div>
-                            <div className="adminPost__wrapper">
-                                <div className="adminRole__name">
-                                        <p>Название</p>
-                                        <p>Изображение</p>
-                                        <p>Статус</p>
-                                        <p>Дата создания</p>
-                                        <p>Просмотры</p>
-                                </div>
-                                <p>Доступные действия</p>
-                            </div>
-                            { post.posts.map((post) => {
-                                    return(
-                                        <div className="adminPost__wrapper_rend adminCategories__wrapper" key={post._id}>
-                                            <div className="adminRole__name ">
-                                                <p>{post.title}</p>
-                                                <img className="posts-image" src={process.env.REACT_APP_API_URL + post.image}/>
-                                                <p>{post.status}</p>
-                                                <p>{post.created_at}</p>
-                                                <p>{post.views}</p>
-                                            </div>
-                                            <div className="adminPost__buttons">
-                                                <button  onClick={() => openCategoryPopup(true, post._id)} type="button" className="btn btn-warning">Редактировать</button>
-                                                <button onClick={() => deletePost(post._id)} type="button" className="btn btn-danger">Удалить</button>
-                                            </div>
-                                        </div>
-                                    )
-                                })
-                            }
-                        </div>
-                </div>
+        // <div className="adminPost">
+        //     <div className="adminRole__container">
+        //         <div className="adminRole__header">
+        //             <h2>Статьи</h2>
+        //             <button onClick={() => popup.setPopup(true)} type="button" className="btn btn-success">Добавить</button>
+        //             {/* <button type="button" className="btn btn-danger">Удалить</button> */}
+        //         </div>
+        //         <div className="role-container">
+        //                 <div>
+        //                     <div className=" container adminPost__wrapper">
+        //                         <div className="adminRole__name">
+        //                                 <p>Название</p>
+        //                                 <p>Изображение</p>
+        //                                 <p>Статус</p>
+        //                                 <p>Дата создания</p>
+        //                                 <p>Просмотры</p>
+        //                         </div>
+        //                         <p>Доступные действия</p>
+        //                     </div>
+        //                     { post.posts.map((post) => {
+        //                             return(
+        //                                 <div className="adminPost__wrapper_rend adminCategories__wrapper" key={post._id}>
+        //                                     <div className="adminRole__name ">
+        //                                         <p>{post.title}</p>
+        //                                         <img className="posts-image" src={process.env.REACT_APP_API_URL + post.image}/>
+        //                                         <p>{post.status}</p>
+        //                                         <p>{post.created_at}</p>
+        //                                         <p>{post.views}</p>
+        //                                     </div>
+        //                                     <div className="adminPost__buttons">
+        //                                         <button  onClick={() => openCategoryPopup(true, post._id)} type="button" className="btn btn-warning">Редактировать</button>
+        //                                         <button onClick={() => deletePost(post._id)} type="button" className="btn btn-danger">Удалить</button>
+        //                                     </div>
+        //                                 </div>
+        //                             )
+        //                         })
+        //                     }
+        //                 </div>
+        //         </div>
+        //     </div>
+        //     <PopupPost />
+        // </div>
+        <div className="scroll-table">
+            <div className="adminPost__header">
+                <h2>Статьи</h2>
+                <button onClick={() => popup.setPopup(true)} type="button" className="btn btn-success">Добавить</button>
             </div>
-            <PopupPost />
+            <table>
+                <thead>
+                    <tr>
+                        <th>Название</th>
+                        <th>Изображение</th>
+                        <th>Статус</th>
+                        <th>Дата создания</th>
+                        <th>Просмотры</th>
+                        <th>Доступные действия</th>
+                    </tr>
+                </thead>
+            </table>	
+            <div className="scroll-table-body">
+                <table>
+                    <tbody>
+                    { post.posts.map((post) => {
+                        return(
+                        <tr key={post._id}>
+                            <td>{post.title}</td>
+                            <td><img className="posts-image" src={process.env.REACT_APP_API_URL + post.image}/></td>
+                            <td>{post.status}</td>
+                            <td>{post.created_at}</td>
+                            <td>{post.views}</td>
+                            <td>
+                            <button  onClick={() => openCategoryPopup(true, post._id)} type="button" className="btn btn-warning">Редактировать</button>                                       <button onClick={() => deletePost(post._id)} type="button" className="btn btn-danger">Удалить</button> 
+                            </td>
+                        </tr>
+                        )
+                    })}
+                    </tbody>
+                </table>
+	        </div>
+    <PopupPost />	
         </div>
     )
 })

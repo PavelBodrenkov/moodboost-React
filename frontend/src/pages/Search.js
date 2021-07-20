@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react"
+import React, { useContext, useEffect, useState } from "react"
 import Aside from "../components/Aside/Aside"
 import SearchForm from "../components/SearchForm/SearchForm"
 import Main from "../components/Main/Main"
@@ -12,6 +12,7 @@ const Search = observer(() => {
     const {post} = useContext(Context)
     const {category} = useContext(Context)
     const location = useLocation()
+    const[visib, setVisib] = useState(12)
 
     useEffect(() => {
         const token = localStorage.getItem("adminToken")
@@ -31,7 +32,7 @@ const Search = observer(() => {
     return(
         <div id="app_moodboost" className="container">
             <Aside />
-            <Main man={post.getSearchPost}/>
+            <Main man={post.getSearchPost} visib={visib}/>
         </div>
     )
 })

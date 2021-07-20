@@ -8,6 +8,7 @@ import PostStore from './store/PostStore';
 import CategoryStore from './store/CategoryStore';
 import AdminStore from './store/AdminStore';
 import PopupStore from './store/PopupStore';
+import Aside from './store/Aside';
 require('dotenv').config({path:'./index'});
 export const Context = createContext(null)
 
@@ -19,7 +20,8 @@ ReactDOM.render(
     post: new PostStore(),
     category: new CategoryStore(),
     admin: new AdminStore(),
-    popup: new PopupStore()
+    popup: new PopupStore(),
+    aside: new Aside()
   }}>
     <App />
   </Context.Provider>,

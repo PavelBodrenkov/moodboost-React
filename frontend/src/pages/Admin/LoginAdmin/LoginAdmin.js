@@ -19,6 +19,7 @@ const {admin} = useContext(Context)
  const click = async (e) => {
      e.preventDefault()
      const response = await fetchLoginAdmin(email, password)
+     console.log(response)
      if(response.data.token) {
         admin.setIsAuth(true)
         localStorage.setItem('adminToken', response.data.token)
@@ -29,6 +30,7 @@ const {admin} = useContext(Context)
 
  //Проверка токена
  useEffect(() => {
+     console.log(localStorage.getItem("adminToken"))
      if(localStorage.getItem("adminToken")) {
         const token = localStorage.getItem("adminToken")
         if(token) {

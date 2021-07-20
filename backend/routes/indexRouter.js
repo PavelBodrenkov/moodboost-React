@@ -11,7 +11,8 @@ const { login, createUser } = require('../controllers/users');
 const {loginAdmin, createAdmin, } = require('../controllers/admin')
 const roleRouter = require('./roles')
 
-
+const {getPosts, getPost, getByCategoriesId} = require('../controllers/post');
+const { getAllCategories} = require('./../controllers/category');
 
 router.use(requestLogger); // подключаем логгер запросов
 
@@ -46,12 +47,24 @@ router.use(requestLogger); // подключаем логгер запросов
   }), createAdmin);
 
 
+router.get('/posts', getPosts)
+router.get('/categories', getAllCategories)
 
+router.get('/posts/post/:id', celebrate({
+  params: Joi.object()
+    .keys({
+      id: Joi.string().required().length(24).hex(),
+    })
+    .unknown(true),
+}), getPost)
 
-
-
-
-
+router.get('/posts/:categoryId', celebrate({
+  params: Joi.object()
+    .keys({
+      categoryId: Joi.string().required().length(24).hex(),
+    })
+    .unknown(true),
+}), getByCategoriesId)
 
 
 router.use(auth);

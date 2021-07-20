@@ -1,10 +1,15 @@
 import './Aside.scss';
 import { Link } from 'react-router-dom';
+import { Context } from "./../../index";
+import { observer } from 'mobx-react-lite';
+import React, {useContext} from 'react';
 
+const Aside  = observer(() => {
 
-function Aside ({asideOpen}) {
+    const {aside} = useContext(Context)
+
     return(
-        <aside id="sidebar" className={`aside ${asideOpen && 'aside_show'}`}>
+        <aside id="sidebar" className={`aside ${aside.isAsideOpen && 'aside_show'}`}>
             <div className="aside__card aside__card_purple">
                 <h4 className="aside__card-title">Moodboost.me - The factory of your emotions</h4>
             </div>
@@ -22,6 +27,6 @@ function Aside ({asideOpen}) {
             </footer>
         </aside>
     )
-}
+})
 
 export default Aside

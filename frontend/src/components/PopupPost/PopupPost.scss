@@ -7,37 +7,43 @@
     background-color: rgba(0, 0, 0, 0.5);
     font-family: 'inter', 'arial', sans-serif;
     display: flex;
+    flex-flow: column nowrap;
     align-items: center;
     justify-content: center;
     opacity: 0;
+    z-index: 99;
     visibility: collapse;
     transition: all 0.5s;
-    overflow: auto;
+    overflow: hidden;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
         &__container {
             // max-width:430px;
-            max-width: 80%;
-            max-height: 90vh;
-           
+            width: 100%;
+            max-height: 100vh;
             // height: 90%;
             background-color:rgb(255, 254, 254);
             position: relative;
             padding: 40px;
-            border-radius: 10px;
+           
             box-sizing: border-box;
             overflow: auto;
         }
         &__form {
             display: flex;
             flex-direction: column;
+            align-items: center;
         }
         &__main {
             display: flex;
-            justify-content: space-between;
+            justify-content: space-around;
+            margin-bottom: 30px;
             &_1 {
-                min-width: 50%;
+                max-width: 50%;
+                margin-right: 20px;
             }
             &_2 {
-                min-width: 30%;
+                max-width: 50%;
             }
         }
         &__redactor {
@@ -79,12 +85,6 @@
             border-radius: 5px;
             padding: 20px;
             margin-bottom: 20px;
-        }
-        &__main {
-            margin-bottom: 30px;
-        }
-        &__main_1 {
-            margin-right: 20px;
         }
         &__seo {
             box-shadow: 0 0 10px rgba(85, 85, 85, 0.288);
@@ -251,11 +251,6 @@ label[name=anons] textarea:focus {
     box-shadow: 0 0 2px rgba(158, 157, 157, 0.815) inset;
 }
 
-
-
-
-
-
 .open-popup {
     opacity: 1;
     visibility: visible;
@@ -271,4 +266,25 @@ label[name=anons] textarea:focus {
     margin-top: 10px;
     height: 30px;
     cursor: pointer;
+  }
+
+  @media screen and (max-width: 802px){
+    .popup-post__container {
+        padding: 20px;
+    }
+    .popup-post__main {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        width: 100%;
+    }
+    .popup-post__main_1 {
+        max-width: 100%;
+        margin-right: 0;
+        width: 100%;
+    }
+    .popup-post__main_2 {
+         max-width: 100%;
+    }
+    
   }

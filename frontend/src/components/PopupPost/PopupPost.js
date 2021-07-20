@@ -14,6 +14,12 @@ const PopupPost = observer(() => {
     const {category} = useContext(Context)
     const {popup} = useContext(Context)
     const {post} = useContext(Context)
+    const[slugDirty, setSlugDirty] = useState(false)
+    const[statusDirty, setStatusDirty] = useState(false)
+    const[categoryDirty, setCategoryDirty] = useState(false)
+    const[slugError, setSlugError] = useState('Поле не может быть пустым')
+    const[statusError, setStatusError] = useState('Поле не может быть пустым')
+    const[categoryError, setCategoryError] = useState('Поле не может быть пустым')
 
     useEffect(() => {
         const token = localStorage.getItem("adminToken")
@@ -32,20 +38,22 @@ const PopupPost = observer(() => {
         const formData = new FormData()
         formData.append('category[category_id]', post.categoryId)
         formData.append('category[name]', post.postCategory)
-        formData.append('title', post.title)
-        formData.append('body', post.bodyPost)
+        formData.append('categoryId', post.categoryId)
+        formData.append('title', post.title || '')
+        formData.append('body', post.bodyPost || '')
         formData.append('slug', post.slug)
         formData.append('status', post.statusPost)
         formData.append('image', post.file)
-        formData.append('views', post.views)
-        formData.append('meta_description', post.description)
-        formData.append('meta_keywords', post.keyWord)
-        formData.append('seo_title', post.seoTitle)
+        formData.append('views', post.views || 0)
+        formData.append('meta_description', post.description || null)
+        formData.append('meta_keywords', post.keyWord || null)
+        formData.append('seo_title', post.seoTitle || '')
 
         fetchEditPost(post.selectedPost, formData, token).then(data => {
             console.log(data);closePopup()
             const delcard = post.posts.map((item) => item._id === data.data._id ? {
                 ...item, 
+                categoryId: data.data.categoryId,
                 title: data.data.title,
                 body:data.data.body,
                 slug:data.data.slug,
@@ -67,15 +75,16 @@ const PopupPost = observer(() => {
         const formData = new FormData()
         formData.append('category[category_id]', post.categoryId)
         formData.append('category[name]', post.postCategory)
-        formData.append('title', post.title)
-        formData.append('body', post.bodyPost)
+        formData.append('categoryId', post.categoryId)
+        formData.append('title', post.title? post.title : null)
+        formData.append('body', post.bodyPost? post.bodyPost : null)
         formData.append('slug', post.slug)
         formData.append('status', post.statusPost)
         formData.append('image', post.file)
-        formData.append('views', post.views)
-        formData.append('meta_description', post.description)
-        formData.append('meta_keywords', post.keyWord)
-        formData.append('seo_title', post.seoTitle)
+        formData.append('views', post.views? post.views : 0)
+        formData.append('meta_description', post.description? post.description : null)
+        formData.append('meta_keywords', post.keyWord? post.keyWord : null)
+        formData.append('seo_title', post.seoTitle? post.seoTitle : null)
         fetchCreatePost(formData, token).then(data => {post.setAddPost(data.data); closePopup()})
         e.target.reset()
     }
@@ -86,7 +95,11 @@ const PopupPost = observer(() => {
         const select = event.target;
         const id = select.children[select.selectedIndex].id;
         post.setCategoryId(id)
-       
+        if(!event.target.value) {
+            setCategoryError('Поле не может быть пустым')
+           } else {
+            setCategoryError('')
+           } 
     }
 
     //Получить файл
@@ -107,9 +120,9 @@ const PopupPost = observer(() => {
             post.setSeoTitle(post.appEditPost.meta_keywords)
             post.setStatusPost(post.appEditPost.status)
             // post.setPostCategory(post.appEditPost.category.name)
-         setTimeout(() => post.setPostCategory(post.appEditPost.category.name), 50 )
-         setTimeout(() =>post.setCategoryId(post.appEditPost.category.category_id), 50)
-         setTimeout(() =>post.setBodyPost(post.appEditPost.body), 50)
+         setTimeout(() => post.setPostCategory(post.appEditPost.category.name), 150 )
+         setTimeout(() =>post.setCategoryId(post.appEditPost.category.category_id), 150)
+         setTimeout(() =>post.setBodyPost(post.appEditPost.body), 150)
          
         }
     },[post.postEdit, post.appEditPost])
@@ -138,38 +151,38 @@ const PopupPost = observer(() => {
     function closePopup () {
         popup.setPopup(false)
         setTimeout(() => post.setPostEdit(false), 500)
-        
     }
 
-    const[val, setVal] = useState('')
-
-function handleChange(e) {
-    var index = e.target.selectedIndex;
-    var optionElement = e.target.childNodes[index]
-    var option =  optionElement.getAttribute('id');
-    setVal(option)
-    // this.setState({
-    //   associationsList: option,
-    //   value: event.target.value
-    // });
-  }
-
-  const [def, setDev] = useState('')
-
-  function onChange(evt) {
-    console.log("onChange fired with event info: ", evt);
-    let newContent = evt.editor.getData();
-    setDev(newContent) 
-    
-  }
-
-  function updateContent(newContent) {
-    setDev(newContent)
+const blurHendler = (e) => {
+    switch(e.target.name) {
+        case "slugerr":
+            setSlugDirty(true)
+            break
+        case "status":
+            setStatusDirty(true)
+            break
+        case "category":
+            setCategoryDirty(true)
+    }
 }
 
-const ttt = "fgdfgdfgd"
+const slugHendler = (e) => {
+    post.setSlug(e.target.value)
+   if(!e.target.value) {
+    setSlugError('Поле не может быть пустым')
+   } else {
+    setSlugError('')
+   } 
+}
 
-  console.log(def)
+const statusHendler = (e) => {
+    post.setStatusPost(e.target.value)
+    if(!e.target.value) {
+        setStatusError('Поле не может быть пустым')
+       } else {
+        setStatusError('')
+       } 
+}
 
     return(
         <div  className={`popup-post ${popup.popup && 'open-popup'}`}>
@@ -185,7 +198,6 @@ const ttt = "fgdfgdfgd"
                         </div>
                         <div className="popup-post__redactor">
                             <h4>Текст статьи</h4>
-                            {/* <CKEditor /> */}
                             <CKEditor 
                                     editor={ClassicEditor}
                                     data={post.bodyPost}
@@ -208,14 +220,6 @@ const ttt = "fgdfgdfgd"
                                         }
                                     }
                                 />
-                                {/* <CKEditor 
-                                    activeClass="p10" 
-                                    content={def} 
-                                    events={{
-                                        "change": onChange,
-                                       
-                                    }}
-                                    /> */}
                         </div>
                         <div className="popup-post__anons">
                             <div>
@@ -240,7 +244,8 @@ const ttt = "fgdfgdfgd"
                                         <h4>Ссылка</h4>
                                     </div>
                                     <label name="slug">
-                                        <input onChange={(e) => post.setSlug(e.target.value)} type="text" placeholder="slug" value={post.slug ? post.slug : ""}/>
+                                        <input onBlur ={(e) => blurHendler(e)} onChange={(e) => slugHendler(e)} type="text" name="slugerr" placeholder="slug" value={post.slug ? post.slug : ""}/>
+                                        {(slugDirty && slugError) && <div style={{color: 'red'}}>{slugError}</div>}
                                     </label>
                                 </div>
                                 <div>
@@ -248,16 +253,17 @@ const ttt = "fgdfgdfgd"
                                 </div>
                                 <label name="public">
                                     Статус публикации
-                                    <select  className="select-public" onChange={(e) => post.setStatusPost(e.target.value)}  value={post.statusPost ? post.statusPost : "DEFAULT"}>
+                                    <select onBlur ={(e) => blurHendler(e)} className="select-public" onChange={(e) => statusHendler(e)}  name="status" value={post.statusPost ? post.statusPost : "DEFAULT"}>
                                         <option value="DEFAULT" disabled>Выберите статус...</option>
                                         <option value="Опубликовано">Опубликовано</option>
                                         <option value="Черновик">Черновик</option>
                                         <option value="На публикации">На публикации</option>
                                     </select>
+                                    {(statusDirty && statusError) && <div style={{color: 'red'}}>{statusError}</div>}
                                 </label>
                                 <label name="category">
                                     Категория статьи
-                                    <select multiple={false} className="select-category" onChange={(e) => showCategoryId(e)}  value={post.postCategory ? post.postCategory : "DEFAULT"}>
+                                    <select onBlur ={(e) => blurHendler(e)} multiple={false} className="select-category" onChange={(e) => showCategoryId(e)} name="category" value={post.postCategory ? post.postCategory : "DEFAULT"}>
                                         <option value="DEFAULT" disabled>Выберите категорию...</option>
                                         {category.category.map((category) => {
                                 
@@ -266,6 +272,7 @@ const ttt = "fgdfgdfgd"
                                             )
                                         })} 
                                     </select>
+                                    {(categoryDirty && categoryError) && <div style={{color: 'red'}}>{categoryError}</div>}
                                 </label>
                            </div>
                         </div>

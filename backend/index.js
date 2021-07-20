@@ -30,6 +30,10 @@ mongoose.connect('mongodb://localhost:27017/moodboostdb', {
 
 // app.use(limiter);
 app.use('/storage/posts', express.static('storage/posts'))
+app.use('/storage/posts/june2021', express.static('storage/posts/June2021'))
+app.use('/storage/posts/July2021', express.static('storage/posts/July2021'))
+app.use('/storage/posts/May2021', express.static('storage/posts/May2021'))
+
 app.use(helmet());
 app.use(cors());
 app.use(bodyParser.json());
@@ -45,14 +49,8 @@ app.post('/upload',MultipartMiddleWare,(req,res) => {
 })
 
 
-
-
-
-
-
-
-
 app.use(indexRouter);
+
 
 
 app.use(errors());

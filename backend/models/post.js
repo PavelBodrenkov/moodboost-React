@@ -1,6 +1,4 @@
 const mongoose = require('mongoose');
-const moment = require('moment');
-
 
 
 const postSchema = mongoose.Schema({
@@ -15,16 +13,21 @@ const postSchema = mongoose.Schema({
                 required: true
             },
             name:{
-                type:String
+                type:String,
+                default:null
             },
             slug:{
-                type:String
+                type:String,
+                default: null
             }
-        }
-    ,
+        },
+    categoryId: {
+        type: String,
+        required: true
+    },
     title: {
         type: String,
-        required:true
+        default: null
     },
     seo_title: {
         type: String,
@@ -36,11 +39,11 @@ const postSchema = mongoose.Schema({
     },
     body: {
         type: String,
-        required:true
+        default: null
     },
     image: {
         type:String,
-        default: ''
+        default: null
     },
     slug: {
         type: String,

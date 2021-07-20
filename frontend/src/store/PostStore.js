@@ -23,8 +23,6 @@ export default class PostStore {
       this._keyWord = ''
       this._seoTitle = ''
       this._postCategiry = []
-
-
     makeAutoObservable(this)
     }
 
