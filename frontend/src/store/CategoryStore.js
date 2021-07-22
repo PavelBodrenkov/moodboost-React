@@ -9,7 +9,13 @@ export default class UserStore {
      this._selectEdit = false
     this._nameCategory = ''
     this._slugCategory = ''
+    this._categoryId = ''
+    this._nameParentCategory = ''
     makeAutoObservable(this)
+    }
+
+    setNameParentCategory (parent) {
+        this._nameParentCategory = parent
     }
 
     setCategory (category) {
@@ -45,6 +51,13 @@ export default class UserStore {
         this._slugCategory = slug
     }
 
+    setCategoryId (id) {
+        this._categoryId = id
+    }
+
+    get nameParentCategory () {
+        return this._nameParentCategory
+    }
 
     get category () {
         return this._category
@@ -72,5 +85,9 @@ export default class UserStore {
 
     get slugCategory () {
         return this._slugCategory
+    }
+
+    get categoryId () {
+        return this._categoryId
     }
 }

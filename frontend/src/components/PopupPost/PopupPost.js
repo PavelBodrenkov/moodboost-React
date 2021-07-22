@@ -268,7 +268,7 @@ const statusHendler = (e) => {
                                         {category.category.map((category) => {
                                 
                                             return(
-                                                <option valut={category.name} id={category._id} key={category._id}>{category.name}</option>
+                                                <option value={category.name} id={category._id} key={category._id}>{category.name}</option>
                                             )
                                         })} 
                                     </select>

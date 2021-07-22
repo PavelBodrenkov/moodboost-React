@@ -3,10 +3,19 @@ const mongoose = require('mongoose');
 const categorySchema = mongoose.Schema({
     sort: {
         type:Number,
+        default:0
     },
     name: {
         type: String,
         required: true
+    },
+    parent_id: {
+        type: String,
+        default:null
+    },
+    name_parent: {
+        type: String,
+        default:null
     },
     slug: {
         type: String,

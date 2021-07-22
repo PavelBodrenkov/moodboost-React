@@ -1,6 +1,6 @@
 import './Header.scss';
 import moodboostLogo from '../../image/moodboost-logo.svg';
-import { Link} from 'react-router-dom';
+import { Link, NavLink} from 'react-router-dom';
 import menu from '../../image/menu.svg'
 import { LIFE_ROUTE, MAINPOSTS_ROUTE, SEARCH_ROUTE } from '../../utils/consts';
 import {fetchPostCategory, fetchApiEmilCategories} from '../../http/categoryAPI'
@@ -10,6 +10,7 @@ import { observer } from 'mobx-react-lite';
 import { fetchCreatePost } from "../../http/postAPI";
 import React, {useState, useContext} from 'react';
 import { Context } from "./../../index";
+import pers from '../../image/pers.svg'
 
 
 const Header = observer(() => {
@@ -162,21 +163,22 @@ aside.setIsAsideOpen()
                 <nav className="header__navbar">
                     <div className="container">
                         <Link  to={MAINPOSTS_ROUTE} className="header__header__navbar">
+                            <img className="header__logo" src={pers}/>
                             <img className="header__navbar_brand-image" src={moodboostLogo} />
                         </Link>
                         <ul id="catigories_menu" className="header__navbar_nav">
                             <li className="header__navbar_nav-link">
-                                <Link to={LIFE_ROUTE} className="header__navbar_nav-link">
+                                <NavLink to={LIFE_ROUTE}  activeClassName="active" className="header__navbar_nav-link">
                                     <span>LIFE</span>
-                                </Link>
+                                </NavLink>
                             </li>
                             {/* <li>
                                 <button onClick={() => createCategory()} >Добавить категорию</button>
                                 <input onChange={ selectFile} type="file" />
                             </li> */}
-                            <li>
+                            {/* <li>
                                 <button onClick={(e) => createPost(e)} >Добавить карточку</button>
-                            </li> 
+                            </li>  */}
                         </ul>
                         <ul className="header__navbar_menu">
                             <li className="headr__navbar_menu-li header__navbar_menu-li_search">

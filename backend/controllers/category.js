@@ -45,13 +45,13 @@ const deleteCategory = (req, res, next) => {
 }
 
 const createCategory = (req, res, next) => {
-    const {sort, name, slug, created_at, updated_at} = req.body
+    const {sort, name, parent_id, name_parent, slug, created_at, updated_at} = req.body
     Category.findOne({name}) 
     .then(nameCategory => {
         if(nameCategory) {
             throw new ConflictError('Категория с таким именем уже существует');
         } else {
-            Category.create({name, slug, sort, owner: req.user._id, created_at, updated_at})
+            Category.create({name, slug, parent_id, name_parent, sort, owner: req.user._id, created_at, updated_at})
             .then((category) => res.send(category))
             .catch(next)
         }
@@ -61,10 +61,11 @@ const createCategory = (req, res, next) => {
 }
 
 const updateCategory = (req, res, next) => {
-    const {sort, name, slug} = req.body
+    const {sort, name, slug, parent_id, name_parent} = req.body
+    
     Category.findByIdAndUpdate(
         {_id:req.params.id},
-        {sort, name, slug, updated_at: req.body.updated_at = Date.now()},
+        {sort, name, slug, parent_id, name_parent, updated_at: req.body.updated_at = Date.now()},
         {new: true}
     )
     .then((category) => res.send(category))

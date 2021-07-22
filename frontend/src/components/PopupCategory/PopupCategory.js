@@ -46,21 +46,19 @@ const Popup = observer(() => {
     }, [])
    
     const{popup} = useContext(Context)
-    console.log(category.appEditCategory.slug)
-    console.log(category.nameCategory)
 
     //Создать категорию
     function createCategory (e) {
         const token = localStorage.getItem("adminToken")
         e.preventDefault()
-        fetchPostCategory(category.nameCategory, category.slugCategory, token).then(data => {category.setAddCategory(data.data); closePopup()})
+        fetchPostCategory(category.nameCategory, category.slugCategory, category.categoryId, category.nameParentCategory, token).then(data => {category.setAddCategory(data.data); closePopup()})
     }
 // Редактировать категорию
     function editCategory (e) {
         const token = localStorage.getItem("adminToken")
         e.preventDefault(e)
-        fetchEditCategory(category.selectedCategory, category.nameCategory, category.slugCategory, token).then(data => {
-            const delcard = category.category.map((item) => item._id === data.data._id ? {...item, name:data.data.name, slug:data.data.slug} : item);
+        fetchEditCategory(category.selectedCategory, category.nameCategory, category.slugCategory, category.categoryId, category.nameParentCategory, token).then(data => {
+            const delcard = category.category.map((item) => item._id === data.data._id ? {...item, name:data.data.name, slug:data.data.slug, name_parent:data.data.name_parent} : item);
             category.setCategory(delcard)
         })
         popup.setPopup(false)
@@ -71,16 +69,20 @@ const Popup = observer(() => {
         if(!popup.popup) {
             category.setNameCategory('')
             category.setSlugCategory('')
+            category.setNameParentCategory('')
+            category.setSelectEdit(false)
         }
-    },[popup.popup])
+    },[popup.popup, category.selectEdit, category.nameParentCategory])
 
 //Подтянуть инфо при редактировании
     useEffect(() => {
         if(category.selectEdit) {
             category.setNameCategory(category.appEditCategory.name)
             category.setSlugCategory(category.appEditCategory.slug)
+            category.setNameParentCategory(category.appEditCategory.name_parent)
+            console.log(category.appEditCategory)
         }
-    },[category.selectEdit, category.appEditCategory.name])
+    },[category.selectEdit, category.appEditCategory])
 
     //Закрыть попап
     function closePopup () {
@@ -93,10 +95,30 @@ const Popup = observer(() => {
         }
       }
 
+      function showCategoryId (event) {
+        category.setNameParentCategory(event.target.value)
+        console.log(category.nameParentCategory)
+        const select = event.target;
+        const id = select.children[select.selectedIndex].id;
+        category.setCategoryId(id)
+    }
+
     return(
         <div onClick={(e) => escClose(e)} className={`popup ${popup.popup && 'open-popup'}`}>
             <div className="popup__container">
                 <form onSubmit={category.selectEdit ? editCategory : createCategory} className="popup__form">
+                    <label  name="name">Родитель
+                        <select onChange={(e) => showCategoryId(e)} value={category.nameParentCategory || ""}>
+                            <option value="DEFAULT" disabled>Пользовательская категория</option>
+                            <option value="null" id={'null'}>--None--</option>
+                            <option disabled>Отношение</option>
+                            {category.category.map((category) => {
+                                    return(
+                                        <option value={category.name} id={category._id} key={category._id}>{category.name}</option>
+                                    )
+                                })} 
+                        </select>
+                    </label>
                     <label name="name">Имя
                         <input onBlur={(e) => blurHendler(e)} onChange={(e) => nameHendler(e)} name="name" type="text" placeholder={'Имя'} value={category.nameCategory || ''}/>
                     {(nameDirty && nameError) && <div style={{color:'red'}}>{nameError}</div>}

@@ -1,10 +1,12 @@
 import { observer } from "mobx-react-lite";
+import './MainPosts.scss';
 import React, { useContext, useEffect, useState } from "react"
-import { Context } from "../index";
-import { fetchPost, fetchApiEmil } from "../http/postAPI";
-import { fetchCategory } from "../http/categoryAPI";
-import Aside from './../components/Aside/Aside';
-import Main from '../components/Main/Main';
+import { Context } from "../../index";
+import { fetchPost, fetchApiEmil } from "../../http/postAPI";
+import { fetchCategory, fetchAllDeviceCategory } from "../../http/categoryAPI";
+import Aside from '../../components/Aside/Aside';
+import Main from '../../components/Main/Main';
+import Post from '../Post/Post'
 
 const MainPosts = observer(() => {
     const {post} = useContext(Context)
@@ -13,38 +15,31 @@ const MainPosts = observer(() => {
     const [fetching, setFetching] = useState(false)
     const[isLoad, setIsLoad] = useState(false)
 
-    // const srci = "storage/posts/June2021/device1.1.jpg"
-
-    // console.log(srci.slice(20))
-    // console.log(srci.split('-').slice(0,1).join('').slice(21) + '.jpg')
-    //  console.log(srci.split('.').shift() + '-' + 'cropped' + '.' + srci.split('.').pop())
-    //  console.log(srci.split('.').slice(0, -1).join('.') + "-" + 'cropped' + '.' + srci.split('.').pop())
-   
-
     useEffect(() => {
         const token = localStorage.getItem("adminToken")
         fetchCategory(token).then(data => category.setCategory(data.data))
-        
         fetchApiEmil().then(data => post.setGetEmilApi(data.data.articles))
+
     }, [])
 
     useEffect(() => {
         const token = localStorage.getItem("adminToken")
         if(fetching) {
             setIsLoad(true)
-            setTimeout(() => {
+            //  setTimeout(() => {
                 fetchPost(token).then(data =>  {
                     post.setPosts(data.data)
-                     setVisib(prevState => prevState+ 12)
+                    console.log('111')
+                     setVisib(prevState => prevState + 12)
                 })
                 .finally(() => {
                     setFetching(false);
                     setIsLoad(false)
                 })
-            }, 1500)
+            // }, 1500)
         }
     }, [fetching, visib])
-
+console.log(visib)
 
     useEffect(() => {
         document.addEventListener('scroll', scrollHendler)
@@ -59,10 +54,13 @@ const MainPosts = observer(() => {
         }
     }
 
+    console.log(category.selectedCategory._id)
+
+
     return(
-        <div id="app_moodboost" className="container">
+        <div id="app_moodboost" className="container main-posts">
             <Aside />
-            <Main  man={post.posts} visib={visib} isLoad={isLoad}/>
+            <Main  man={post.posts} visib={visib} isLoad={isLoad} visibCategory={category.category}/>
         </div>
     )
 

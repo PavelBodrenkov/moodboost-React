@@ -7,11 +7,6 @@ const {
     deletePost,
     updatePost
 } = require('../controllers/post');
-
-
-
-
-  
     
 
 router.post('/', upload.single('image'), celebrate({

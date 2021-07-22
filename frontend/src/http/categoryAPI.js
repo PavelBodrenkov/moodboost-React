@@ -16,8 +16,8 @@ export const fetchCategory = async (token) => {
 //     return postCategory
 // }
 //Создать категорию
-export const fetchPostCategory = async (name, slug, token) => {
-    const postCategory = await $hostPostCategory.post('categories', {name, slug}, {
+export const fetchPostCategory = async (name, slug, parent_id, name_parent, token) => {
+    const postCategory = await $hostPostCategory.post('categories', {name, slug, parent_id, name_parent}, {
         headers: {
             "Content-Type": "application/json",
             authorization : `Bearer ${token}`
@@ -45,8 +45,8 @@ export const fetchDeleteCategory = async(id, token) => {
 }
 
 //Редактировать категорию
-export const fetchEditCategory = async(id, name, slug, token) => {
-    const category = await $hostCategory.patch('categories' + '/' + id, {name, slug}, {
+export const fetchEditCategory = async(id, name, slug, parent_id, name_parent, token) => {
+    const category = await $hostCategory.patch('categories' + '/' + id, {name, slug, parent_id, name_parent}, {
         headers: {
             "Content-Type": "application/json",
             authorization : `Bearer ${token}`

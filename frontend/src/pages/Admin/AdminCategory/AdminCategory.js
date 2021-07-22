@@ -25,7 +25,8 @@ import { useLocation } from 'react-router-dom';
         category.setSelectedCategory(id)
         if(category.selectEdit) {
             const token = localStorage.getItem("adminToken")
-           fetchOneCategory(category.selectedCategory, token).then(data => category.setAppEditCategory(data.data))
+           fetchOneCategory(category.selectedCategory, token).then(data => {category.setAppEditCategory(data.data); console.log(data.data)})
+           console.log(category.appEditCategory)
         }
     }
 

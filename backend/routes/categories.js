@@ -31,7 +31,9 @@ router.post('/', celebrate({
     body: Joi.object().keys({
       name: Joi.string().required(),
       slug: Joi.string().required(),
-      sort: Joi.number(),
+      parent_id:Joi.string().default(null),
+      name_parent:Joi.string().default(null),
+      sort: Joi.number().default(0),
       created_at:Joi.date().default(new Date),
       updated_at:Joi.date().default(null)
     }),
@@ -44,9 +46,12 @@ router.patch('/:id', celebrate({
       })
       .unknown(true),
     body: Joi.object().keys({
-      sort: Joi.number(),
+      sort: Joi.number().default(0),
       name: Joi.string().required(),
-      slug: Joi.string().required()})
+      slug: Joi.string().required(),
+      parent_id:Joi.string().default(null),
+      name_parent:Joi.string().default(null)
+    })
   }), updateCategory)
 
 module.exports = router

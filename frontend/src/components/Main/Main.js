@@ -12,7 +12,7 @@ import { fetchCategory } from "../../http/categoryAPI";
 import CardPreloader from './../CardPreloader/CardPreloader'
 
 
-const Main = observer(({man, visib, isLoad}) => {
+const Main = observer(({man, visib, isLoad, visibCategory}) => {
 
     const {category} = useContext(Context)
     const {post} = useContext(Context)
@@ -33,7 +33,7 @@ const Main = observer(({man, visib, isLoad}) => {
 
     const targetClick = (hash) => {
         setTarget(!target)
-        category.setSelectedCategory(hash)  
+        category.setSelectedCategory(hash)
     }
 
      return(
@@ -41,10 +41,10 @@ const Main = observer(({man, visib, isLoad}) => {
              {location.pathname === ('/search') && <SearchForm />}
             <div>
                 <div className="tags-list mb-4">
-                    {location.pathname !== ('/search') && category.category.map((hash, index) => {
+                    {location.pathname !== ('/search') && visibCategory.map((hash, index) => {
                             return(
                                 <button 
-                                onClick={() => targetClick(hash)} className={`tags-list__item ${hash._id === category.selectedCategory._id && target && 'color-green'}`} key={hash._id}>{hash.name} 
+                                    onClick={() => targetClick(hash)} className={`tags-list__item ${hash._id === category.selectedCategory._id && target && 'color-green'}`} key={hash._id}>{hash.name} 
                                 </button>
                             )
                         })

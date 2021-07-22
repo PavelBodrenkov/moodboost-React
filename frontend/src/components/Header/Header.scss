@@ -1,10 +1,11 @@
 .header {
+    background-color: white;
     &__navbar {
         display: flex;
         align-items: center;
         position: relative;
-        height: 72px;
-        box-shadow: 0 4px 16px rgba(205, 209, 218, 40%);
+        height: 110px;
+        box-shadow: 0 1px 4px rgba(205, 209, 218, 40%);
             & .container {
                 display: flex;
                 flex-flow: row nowrap;
@@ -78,6 +79,11 @@
                 width: 19px!important;
                 height: 19px!important;
             }
+    }
+    &__logo {
+        width:52px;
+        height: 78px;
+        margin-right: 20px;
     } 
 }
 
@@ -91,4 +97,9 @@
 
 .icon-search:before {
     content: "\E90E";
+}
+
+.active {
+    color:rgb(23, 187, 8);
+    font-weight: bold;
 }

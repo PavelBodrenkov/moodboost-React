@@ -17,10 +17,10 @@ const  SearchForm = observer(() => {
     return(
         <div className="feed__searching">
            <div>
-               <div className="form-group">
+               <form className="form-group" action="/search" method="GET"> 
                     <i className="icon-search"></i>
-                    <input onChange={(e) => hendleChange(e)} type="search" placeholder="Enter a keyword..." value={search}/>
-               </div>
+                    <input onChange={(e) => hendleChange(e)} type="text" name="keyword" placeholder="Enter a keyword..." value={search}/>
+               </form>
                <h5 className="mt-4">Enter a keyword</h5>
            </div>
        </div>

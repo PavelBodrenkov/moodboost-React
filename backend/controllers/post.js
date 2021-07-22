@@ -13,7 +13,6 @@ const getPosts = (req,res,next) => {
 }
 
 const getByCategoriesId = (req,res, next) => {
-  
     Post.find({
          categoryId: req.params.categoryId,
         //  owner: req.user._id
@@ -43,8 +42,6 @@ const createPost = (req, res, next) => {
             chromaSubsampling:'4:4:4'
         }).toFile(compressorImage)
      }
-
-     console.log(compressorImage)
 
     Post.create({owner: req.user._id, category:req.body.category, categoryId, image: req.file ? req.file.path : '', title, seo_title, excerpt, body, slug, meta_description, meta_keywords, status, featured, views})
     .then((post) => res.status(201).send(post))

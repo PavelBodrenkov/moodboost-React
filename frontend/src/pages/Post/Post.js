@@ -1,5 +1,5 @@
 import './Post.scss';
-import { useParams } from 'react-router-dom';
+import { useParams, useLocation, matchPath } from 'react-router-dom';
 import { useEffect, useState, useContext } from 'react';
 import {fetchOneDevice} from '../../http/postAPI';
 import Main from './../../components/Main/Main';
@@ -74,7 +74,7 @@ const Post = observer(() => {
             </div>
             <p dangerouslySetInnerHTML={{__html: device?.body}} />
         </article>
-        <Main man={post.posts} visib={visib} isLoad={isLoad}/>
+         <Main man={post.posts} visib={visib} isLoad={isLoad} visibCategory={category.category}/>
         </div>
     )
 })

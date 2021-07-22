@@ -18,7 +18,7 @@ import AdminCategory from './pages/Admin/AdminCategory/AdminCategory'
 import LoginAdmin from "./pages/Admin/LoginAdmin/LoginAdmin"
 import Login from './pages/Login/Login'
 import Register from "./pages/Register"
-import MainPosts from "./pages/MainPosts"
+import MainPosts from "./pages/MainPosts/MainPosts"
 import Post from "./pages/Post/Post"
 import Life from "./pages/Life"
 import Search from "./pages/Search"

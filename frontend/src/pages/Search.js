@@ -24,7 +24,14 @@ const Search = observer(() => {
         if(location.pathname === ('/search')) {
             if(post.searchPost.length > 2) {
              post.setGetSearchPost(post.posts.filter(item => item.body.toLowerCase().includes(post.searchPost.toLowerCase()) || item.title.toLowerCase().includes(post.searchPost.toLowerCase())))
-            } 
+             if(post.getSearchPost.length === 0) {
+                console.log('Ничего не найдено')
+            }
+            }
+            
+            if(post.searchPost.length === 0) {
+                console.log('Enter a keyword')
+            }
         }
     }, [post.searchPost, location.pathname])
 
