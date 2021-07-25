@@ -62,9 +62,6 @@ useEffect(() => {
     })
     setPostLife(sortPost)
 }, [post.posts])
- 
-console.log(post.posts)
-
 
     return(
         <div id="app_moodboost" className="container">

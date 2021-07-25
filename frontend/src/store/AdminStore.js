@@ -5,7 +5,12 @@ export default class AdminStore {
         this._isAuth = false
         this._admin = {}
         this._roles = []
+        this._adminPostSort = []
         makeAutoObservable(this)
+    }
+
+    setAdminPostSort (post) {
+        this._adminPostSort = post
     }
 
     setIsAuth(bool) {
@@ -30,5 +35,9 @@ export default class AdminStore {
 
     get roles () {
         return this._roles
+    }
+
+    get adminPostSort () {
+        return this._adminPostSort
     }
 }

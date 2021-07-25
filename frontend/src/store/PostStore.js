@@ -23,9 +23,13 @@ export default class PostStore {
       this._keyWord = ''
       this._seoTitle = ''
       this._postCategiry = []
+      this._postSort = []
     makeAutoObservable(this)
     }
 
+    setPostSort (post) {
+        this._postSort = post
+    }
     setTitle (title) {
         this._title = title
     }
@@ -170,5 +174,9 @@ export default class PostStore {
     }
     get seoTitle () {
         return this._seoTitle
+    }
+
+    get postSort () {
+        return this._postSort
     }
 }

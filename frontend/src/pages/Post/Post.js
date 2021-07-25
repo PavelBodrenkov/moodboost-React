@@ -2,12 +2,19 @@ import './Post.scss';
 import { useParams, useLocation, matchPath } from 'react-router-dom';
 import { useEffect, useState, useContext } from 'react';
 import {fetchOneDevice} from '../../http/postAPI';
-import Main from './../../components/Main/Main';
-import Aside from '../../components/Aside/Aside';
 import { observer } from 'mobx-react-lite';
 import { Context } from "../../index";
-import { fetchPost } from "../../http/postAPI";
+import { fetchPost, fetchAllDeviceCategory } from "../../http/postAPI";
 import { fetchCategory } from "../../http/categoryAPI";
+import share from './../../image/share.svg';
+import comment from './../../image/comment.svg';
+import like from './../../image/like.svg';
+import point from './../../image/point.svg';
+import watch_min from '../../image/watch-min.svg';
+import comment_min from '../../image/comment-min.svg';
+import like_min from '../../image/like-min.svg';
+import share_min from '../../image/share-min.svg';
+import moment from 'moment';
 
 const Post = observer(() => {
     // let cardViews = (post?.views/1000).toFixed(1)
@@ -19,6 +26,15 @@ const Post = observer(() => {
     const [fetching, setFetching] = useState(false)
     const[isLoad, setIsLoad] = useState(false)
     const[visib, setVisib] = useState(12)
+    const[target, setTarget] = useState(false)
+
+    useEffect(() => {
+        const token = localStorage.getItem("adminToken")
+        fetchCategory(token).then(data => category.setCategory(data.data))
+      
+        fetchPost(token).then(data => post.setPosts(data.data))
+
+    }, [])
 
     useEffect(() => {
         const token = localStorage.getItem("adminToken")
@@ -36,6 +52,15 @@ const Post = observer(() => {
             }, 1500)
         }
     }, [fetching, visib])
+
+    // useEffect(() => {
+    //     const token = localStorage.getItem("adminToken")
+    //     if(target) {
+    //         fetchAllDeviceCategory(category.selectedCategory._id, token).then(data => post.setPostSort(data.data))
+    //     } else {
+    //         fetchPost(token).then(data => post.setPostSort(data.data))
+    //     }
+    // }, [category.selectedCategory._id, target])
 
     useEffect(() => {
         const token = localStorage.getItem("adminToken")
@@ -60,22 +85,57 @@ const Post = observer(() => {
             setFetching(true)
         }
     }
-
+    
     return(
-        <div id="app_moodboost" className="container">
-        <Aside/>
-        <article className="main-article mb-5">
-            <h1 className="main-article__title">{device.title}</h1>
-            <div className="article-actions article-actions_lg">
-                <button className="article-actions__item article-actions__item_disabled">
-                    <i className="icon-eye"></i>
-                    <span id="views_html">{cardViews}K</span>
-                </button>
+            <article className="main-article">
+            <div className="article-preview__hash">
+               <p className='t1'>{device?.category?.name}</p>
+                <p>{moment(device.created_at).format("DD MMM, YYYY")}</p>
             </div>
-            <p dangerouslySetInnerHTML={{__html: device?.body}} />
+            <h1 className="main-article__title">{device.title}</h1>
+            <div className='main-article__button'>
+                <nav>
+                    <ul className="main-article__button-active">
+                        <li className="main-article__button__list">
+                        <img className="like-img" src={like} />
+                                <span>Like</span>
+                            </li>
+                        <li className="main-article__button__list comment">
+                                <img className="comment-img" src={comment} />
+                                <span>Comment</span>
+                        </li>
+                        <li className="main-article__button__list">
+                                <img className="share-img" src={share} />
+                                <span>Shere</span>
+                        </li>
+                    </ul>
+                </nav>
+                <nav>
+                    <ul className="main-article__button-sum">
+                        <li className="article-button__list-two">
+                                <img className='article-button__min-img' src={watch_min} />
+                                <span>{cardViews + 'K'}</span>
+                        </li>
+                        <li className="article-button__list-two"><img  src={point}/></li>
+                        <li className="article-button__list-two">
+                                <img className='article-button__min-img' src={like_min} />
+                                <span>999k</span>
+                            </li>
+                        <li className="article-button__list-two"><img src={point}/></li>
+                        <li className="article-button__list-two">
+                            <img className='article-button__min-img' src={comment_min} />
+                            <span>11400</span>
+                            </li>
+                        <li className="article-button__list-two"><img src={point}/></li>
+                        <li className="article-button__list-two">
+                            <img className='article-button__min-img' src={share_min} />
+                            <span>11400</span>
+                            </li>
+                    </ul>
+                </nav>
+            </div>
+            <p className="post-body" dangerouslySetInnerHTML={{__html: device?.body}} />
         </article>
-         <Main man={post.posts} visib={visib} isLoad={isLoad} visibCategory={category.category}/>
-        </div>
     )
 })
 

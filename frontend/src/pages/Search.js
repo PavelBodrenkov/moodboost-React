@@ -39,7 +39,7 @@ const Search = observer(() => {
     return(
         <div id="app_moodboost" className="container">
             <Aside />
-            <Main man={post.getSearchPost} visib={visib}/>
+            <Main card={post.getSearchPost} visib={visib}/>
         </div>
     )
 })

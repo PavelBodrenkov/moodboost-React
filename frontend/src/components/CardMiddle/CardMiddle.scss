@@ -1,0 +1,36 @@
+.article-preview-middle {
+    align-items: stretch;
+    flex-direction: column;
+    text-decoration: none;
+    color: #000;
+    overflow: hidden;
+    max-width: 100%;
+    vertical-align: top;
+    align-self: flex-start;
+    margin-bottom: 30px;
+    display: block;
+    // width: 100%;
+    //height: 100%;
+    //overflow-y: scroll;
+    // will-change: transform;
+    
+   
+}
+
+.article-preview-middle__title {
+    display: flex;
+    color: #000;
+    text-decoration: none;
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 28px;
+    text-align: left;
+}
+
+.article-preview-middle__photo {
+    border-radius: 10px;
+    width: 100%;
+    height: 176px;
+    -o-object-fit: cover;
+    object-fit: cover;
+}

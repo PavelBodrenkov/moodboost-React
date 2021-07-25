@@ -9,7 +9,7 @@ const passport = require('passport')
 const { errors } = require('celebrate');
 const indexRouter = require('./routes/indexRouter');
 const multipart = require('connect-multiparty');
-const MultipartMiddleWare = multipart({uploadDir:'./uploads/uploadsBody'});
+const MultipartMiddleWare = multipart({uploadDir:'./storage/posts'});
 
 const { PORT = 3000 } = process.env;
 const app = express();

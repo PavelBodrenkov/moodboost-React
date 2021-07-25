@@ -1,6 +1,9 @@
 @import './vendor/normalize.css';
-@import './icomoon/style.css';
+@import './fonts_icon/icomoon/style.css';
 
+html {
+  overflow-x: hidden;
+}
   body {
     font-family: Helvetica,Arial,Helvetica Neue,sans-serif;
     font-size: 16px;
@@ -10,6 +13,7 @@
     position: relative;
     overflow-x: hidden;
     background-color: #F6FFF6;
+    height: auto;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -18,7 +22,7 @@ h1, h2, h3, h4, h5, h6 {
 
 @media screen and (min-width: 1400px) {
   .container, .container-lg, .container-md, .container-sm, .container-xl, .container-xxl {
-    max-width: 1140px;
+    max-width: 1440px;
   }
 }
 
@@ -26,6 +30,12 @@ h1, h2, h3, h4, h5, h6 {
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+a, blockquote, body, dd, div, dl, dt, fieldset, form, h1, h2, h3, h4, h5, h6, html, img, input, label, li, ol, p, pre, td, th, ul {
+  margin: 0;
+  padding: 0;
+  outline: 0;
 }
 
 

@@ -36,7 +36,7 @@ const[log, setLog] = useState(false)
             })} */}
             {publicRoutes.map(({path, Component}) => {
                 return(
-                    <Route key={path} path={path} component={Component} exact/>
+                    <Route key={path} path={path} component={Component}/>
                 )
             })}
 

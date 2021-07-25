@@ -1,7 +1,6 @@
 import './Header.scss';
 import moodboostLogo from '../../image/moodboost-logo.svg';
-import { Link, NavLink} from 'react-router-dom';
-import menu from '../../image/menu.svg'
+import { Link, NavLink, useLocation} from 'react-router-dom';
 import { LIFE_ROUTE, MAINPOSTS_ROUTE, SEARCH_ROUTE } from '../../utils/consts';
 import {fetchPostCategory, fetchApiEmilCategories} from '../../http/categoryAPI'
 import {fetchApiEmil} from '../../http/postAPI';
@@ -14,13 +13,9 @@ import pers from '../../image/pers.svg'
 
 
 const Header = observer(() => {
-
     useEffect(() => {
         fetchApiEmil().then(data => category.setEmilCategory(data.data.articles))
     }, [])
-
-    
-   
 
 const {category} = useContext(Context)
 const {post} = useContext(Context)
@@ -142,14 +137,6 @@ function createPost (e) {
 })
 }
 
-// useEffect(() => {
-//     category.emilCategory.forEach((post) => {
-//         console.log(post.category_id)
-//     })
-// }, [])
-
-
-
 function selectFile (e) {
     setFile(e.target.files[0]) 
 }
@@ -160,18 +147,17 @@ aside.setIsAsideOpen()
 
     return(
         <header className="header">
-                <nav className="header__navbar">
-                    <div className="container">
-                        <Link  to={MAINPOSTS_ROUTE} className="header__header__navbar">
+                <nav className="header__navbar container">
+                        <a href={MAINPOSTS_ROUTE} className="header__header__navbar">
                             <img className="header__logo" src={pers}/>
-                            <img className="header__navbar_brand-image" src={moodboostLogo} />
-                        </Link>
-                        <ul id="catigories_menu" className="header__navbar_nav">
+                             <img className="header__navbar_brand-image" src={moodboostLogo} />
+                        </a>
+                        {/* <ul id="catigories_menu" className="header__navbar_nav">
                             <li className="header__navbar_nav-link">
                                 <NavLink to={LIFE_ROUTE}  activeClassName="active" className="header__navbar_nav-link">
                                     <span>LIFE</span>
                                 </NavLink>
-                            </li>
+                            </li> */}
                             {/* <li>
                                 <button onClick={() => createCategory()} >Добавить категорию</button>
                                 <input onChange={ selectFile} type="file" />
@@ -179,18 +165,17 @@ aside.setIsAsideOpen()
                             {/* <li>
                                 <button onClick={(e) => createPost(e)} >Добавить карточку</button>
                             </li>  */}
-                        </ul>
+                        {/* </ul> */}
                         <ul className="header__navbar_menu">
                             <li className="headr__navbar_menu-li header__navbar_menu-li_search">
                                 <Link to={SEARCH_ROUTE} className="header__navbar_menu-link"><i className="icon-search"></i></Link>
                             </li>
-                            <li onClick={() => aside.setIsAsideOpen()} className="header__navbar_menu-li header__navbar_menu-li_toggler">
+                            {/* <li onClick={() => aside.setIsAsideOpen()} className="header__navbar_menu-li header__navbar_menu-li_toggler">
                                 <a href="#" id="sidebar_toggler" className="header__navbar_menu-link">
                                     <img src={menu} />
                                 </a>
-                            </li>
+                            </li> */}
                         </ul>
-                    </div>
                 </nav>  
         </header>
     )

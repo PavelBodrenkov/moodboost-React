@@ -1,0 +1,64 @@
+.sign-up-weekly {
+  background: url('../../image/weekly.jfif') center no-repeat;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+   width: 100%;
+   height: 350px;
+   border-radius: 6px;
+  background-size: cover;
+  margin-bottom: 30px;
+    &__form {
+        background-color: white;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        &_title {
+            font-size: 18px;
+            padding: 25px 0 25px 0;
+        }
+        &_button {
+            width:100%;
+            padding:0;
+            margin:0;
+            background: #00B800;
+            border-radius: 76px;
+            width: 121px;
+            height: 42px;
+            border:none;
+            color: white;
+            transition: 0.2s linear;
+            &:hover {
+                background: #029402;
+            }
+        }
+        &_input {
+            width: 70%;
+            padding: 10px 0 10px 5px;
+            border: none;
+        }
+    }
+    &__container-input {
+        border: 0.5px solid #CECECE;
+        height: 62px;
+        width: 85%;
+        display: flex;
+        align-items: center;
+        margin-bottom: 17px;
+        box-sizing: border-box;
+        border-radius: 6px;
+    }
+}
+
+@media screen and (max-width: 1400px) {
+    .sign-up-weekly {
+        height: 300px;
+        &__form{
+            &_title {
+                font-size: 16px;
+            }
+        }
+    }
+}

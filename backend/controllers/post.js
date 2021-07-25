@@ -31,9 +31,9 @@ const createPost = (req, res, next) => {
     const {title, seo_title, excerpt, body, slug, meta_description, meta_keywords, status, featured, views, categoryId} = req.body;
      let compressorImage
    if (path.extname(req.file.originalname).toLowerCase() === ".png") {
-    compressorImage = path?.join(__dirname, '../', 'storage', '/', 'posts', req.file?.originalname?.split('.').slice(0, -1).join('.') + "-" + 'cropped' + '.png')
+    compressorImage = path?.join(__dirname, '../', 'storage', '/', 'posts', req.file?.originalname?.split('.').slice(0, -1).join('.') + "-" + 'medium' + '.png')
    } else {
-    compressorImage = path?.join(__dirname, '../', 'storage', '/', 'posts', req.file?.originalname?.split('.').slice(0, -1).join('.') + "-" + 'cropped' + '.jpg')
+    compressorImage = path?.join(__dirname, '../', 'storage', '/', 'posts', req.file?.originalname?.split('.').slice(0, -1).join('.') + "-" + 'medium' + '.jpg')
    }
 
      if(req.file) {

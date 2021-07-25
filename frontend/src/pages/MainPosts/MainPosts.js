@@ -2,11 +2,13 @@ import { observer } from "mobx-react-lite";
 import './MainPosts.scss';
 import React, { useContext, useEffect, useState } from "react"
 import { Context } from "../../index";
-import { fetchPost, fetchApiEmil } from "../../http/postAPI";
-import { fetchCategory, fetchAllDeviceCategory } from "../../http/categoryAPI";
-import Aside from '../../components/Aside/Aside';
+import { fetchPost, fetchApiEmil, fetchAllDeviceCategory } from "../../http/postAPI";
+import { fetchCategory } from "../../http/categoryAPI";
 import Main from '../../components/Main/Main';
-import Post from '../Post/Post'
+import Hashtags from '../../components/HashTags/Hashtags';
+import CardMiddle from '../../components/CardMiddle/CardMiddle';
+import {useLocation } from 'react-router-dom';
+import SignUpWeekly from '../../components/SignUpWeekly/SignUpWeekly';
 
 const MainPosts = observer(() => {
     const {post} = useContext(Context)
@@ -14,11 +16,14 @@ const MainPosts = observer(() => {
     const[visib, setVisib] = useState(12)
     const [fetching, setFetching] = useState(false)
     const[isLoad, setIsLoad] = useState(false)
+    const[target, setTarget] = useState(false)
+    const location = useLocation()
 
     useEffect(() => {
         const token = localStorage.getItem("adminToken")
         fetchCategory(token).then(data => category.setCategory(data.data))
         fetchApiEmil().then(data => post.setGetEmilApi(data.data.articles))
+        fetchPost(token).then(data => post.setPosts(data.data))
 
     }, [])
 
@@ -29,7 +34,6 @@ const MainPosts = observer(() => {
             //  setTimeout(() => {
                 fetchPost(token).then(data =>  {
                     post.setPosts(data.data)
-                    console.log('111')
                      setVisib(prevState => prevState + 12)
                 })
                 .finally(() => {
@@ -39,7 +43,6 @@ const MainPosts = observer(() => {
             // }, 1500)
         }
     }, [fetching, visib])
-console.log(visib)
 
     useEffect(() => {
         document.addEventListener('scroll', scrollHendler)
@@ -54,13 +57,56 @@ console.log(visib)
         }
     }
 
-    console.log(category.selectedCategory._id)
+    const targetClick = (hash) => {
+        setTarget(!target)
+        category.setSelectedCategory(hash)
+        console.log(target)
+        if(target) {
+            category.setSelectedCategory('')
+        }
+    }
+
+    useEffect(() => {
+        const token = localStorage.getItem("adminToken")
+        if(target) {
+            fetchAllDeviceCategory(category.selectedCategory._id, token).then(data => post.setPostSort(data.data))
+        } else {
+            fetchPost(token).then(data => {
+                const sortData = data.data.sort((a,b) => {
+                    return new Date(b.created_at) - new Date(a.created_at)
+                })
+                post.setPostSort(sortData)
+            })
+        }
+
+    }, [category.selectedCategory._id, target])
 
 
     return(
         <div id="app_moodboost" className="container main-posts">
-            <Aside />
-            <Main  man={post.posts} visib={visib} isLoad={isLoad} visibCategory={category.category}/>
+            <div className="tags-list">
+                <Hashtags visibCategory={category.category} targetClick={targetClick} target={target}/> 
+            </div>
+            <div id="page">
+            {/* <Route excat path={POST_ROUTE + '/:id'} component={Post} /> */}
+                <main  className="feed">
+            {location.pathname === ('/main') && <h4 className="feed__title">{`${!target? 'Life' : `Life-${category.selectedCategory.name}`}`}</h4>}
+                    <Main  card={post.postSort} visib={visib} isLoad={isLoad} target={target}/>
+                </main>
+                <section id="sidebar" data-v-c1e3d870>
+                    <div className="content-slidebar">
+                        <SignUpWeekly />
+                        {post.posts.slice(0, 12).map((card) => {
+                                return(
+                                    <CardMiddle card={card} key={card._id}/>
+                                )
+                            })
+                        }
+                    </div>
+                </section>
+            </div>
+            
+             
         </div>
     )
 
