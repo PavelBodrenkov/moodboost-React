@@ -30,7 +30,14 @@ const createUser =(req, res, next) => {
     User.findOne({email})
     .then((user) => {
         if (user) {
-            throw new ConflictError('Пользователь с таким email уже существует');
+           throw new ConflictError('A user with this email already exists');
+        }
+    })
+    .catch(next)
+    User.findOne({name})
+    .then((user) => {
+        if (user) {
+           throw new ConflictError('A user with this name already exists');
         }
     })
     .catch(next)
@@ -54,15 +61,16 @@ const login = (req, res, next) => {
     const {email, password} = req.body
     return User.findUserByCredentials(email, password)
     .then((user) => {
+     console.log(user)
         //создание токена
         const token = jwt.sign({ _id: user._id },
-            NODE_ENV === 'production' ? JWT_SECRET : 'dev-secret',
-            { expiresIn: '7d' });
-          res.send({ token });
+          NODE_ENV === 'production' ? JWT_SECRET : 'dev-secret',
+          { expiresIn: '7d' });
+        res.send({ token });
     })
-    .catch((err) => {
-        throw new NotAuthorizedError(err.message);
-      })
+    // .catch((err) => {
+    //     throw new NotAuthorizedError(err.message);
+    //   })
     .catch(next);
 }
 

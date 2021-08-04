@@ -5,11 +5,7 @@
     // max-width: 1440px;
 }
 
-@media screen and (max-width: 1400px) {
-    #app_moodboost {
-        padding: 111px 30px 0 30px;
-    }
-}
+
 
 .main-posts {
     background-color: #F6FFF6;
@@ -36,7 +32,7 @@
     margin-top: 0;
     width: 172px;
     height: -webkit-calc(100% - 118px);
-    height: calc(100% - 118px);
+    height: calc(100% - 110px);
     position: fixed;
     overflow: hidden;
     -ms-scroll-chaining: none;
@@ -50,12 +46,33 @@
 .feed__title {
     padding-bottom: 30px;
     font-size: 22px;
+    font-weight: 500;
+    color:#101010;
 }
 
 .content-slidebar {
     position: sticky;
     top: 120px;
     padding-left:30px;
+}
+
+.sign-up-weekly-sidebar {
+    height: 350px;
+    margin-bottom: 30px;
+}
+
+@media screen and (max-width: 1400px) {
+    .sign-up-weekly-sidebar {
+         height: 300px;
+        
+       
+    }
+}
+
+@media screen and (max-width: 1400px) {
+    #app_moodboost {
+        padding: 111px 30px 0 30px;
+    }
 }
 
 @media screen and (max-width: 992px) {
@@ -65,4 +82,33 @@
     .feed {
         width: 100%;
     }
+}
+
+@media screen and (max-width: 768px) {
+    .tags-list {
+        transition: all .2s ease-out;
+        left: -400px;
+        z-index: 99;
+        width: 280px;
+        background: white;
+        width: 320px;
+    }   
+    #page {
+        margin-left: 0;
+    } 
+}
+
+@media screen and (max-width: 570px) {
+      
+   
+    #app_moodboost {
+        padding: 111px 10px 0 10px;
+    }
+    .main-article {
+        background-color: transparent;
+    }
+}
+
+.openAside {
+    left: 0;
 }

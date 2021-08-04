@@ -5,7 +5,9 @@ const { celebrate, Joi } = require('celebrate');
 const {
     createPost,
     deletePost,
-    updatePost
+    updatePost,
+    likePost,
+    dislikePost,
 } = require('../controllers/post');
     
 
@@ -63,5 +65,21 @@ router.delete('/:id', celebrate({
       })
       .unknown(true),
   }), deletePost)
+
+  router.put('/likes/:id', celebrate({
+    params: Joi.object()
+      .keys({
+        id: Joi.string().required().length(24).hex(),
+      })
+      .unknown(true),
+  }), likePost);
+
+  router.delete('/likes/:id', celebrate({
+    params: Joi.object()
+      .keys({
+        id: Joi.string().required().length(24).hex(),
+      })
+      .unknown(true),
+  }), dislikePost);
 
 module.exports = router;

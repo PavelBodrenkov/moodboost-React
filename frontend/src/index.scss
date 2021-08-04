@@ -5,13 +5,13 @@ html {
   overflow-x: hidden;
 }
   body {
-    font-family: Helvetica,Arial,Helvetica Neue,sans-serif;
+    font-family: 'Roboto', 'Arial', sans-serif;
     font-size: 16px;
     line-height: 1.65;
     color: #000;
     min-width: 320px;
     position: relative;
-    overflow-x: hidden;
+    // overflow-x: hidden;
     background-color: #F6FFF6;
     height: auto;
 }
@@ -34,7 +34,7 @@ code {
 
 a, blockquote, body, dd, div, dl, dt, fieldset, form, h1, h2, h3, h4, h5, h6, html, img, input, label, li, ol, p, pre, td, th, ul {
   margin: 0;
-  padding: 0;
+  // padding: 0;
   outline: 0;
 }
 

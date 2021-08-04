@@ -1,5 +1,9 @@
 .feed__searching {
-    width: 66%;
+    width: 80%;
+    padding-top: 20px;
+    & h5 {
+        padding-bottom: 20px;
+    }
 }
 .form-group {
     position: relative;

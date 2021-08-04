@@ -9,6 +9,7 @@ import CategoryStore from './store/CategoryStore';
 import AdminStore from './store/AdminStore';
 import PopupStore from './store/PopupStore';
 import Aside from './store/Aside';
+import CommentsStore from './store/CommentsStore';
 require('dotenv').config({path:'./index'});
 export const Context = createContext(null)
 
@@ -21,7 +22,8 @@ ReactDOM.render(
     category: new CategoryStore(),
     admin: new AdminStore(),
     popup: new PopupStore(),
-    aside: new Aside()
+    aside: new Aside(),
+    comment: new CommentsStore(),
   }}>
     <App />
   </Context.Provider>,

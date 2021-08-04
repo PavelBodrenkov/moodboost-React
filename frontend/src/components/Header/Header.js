@@ -1,6 +1,6 @@
 import './Header.scss';
 import moodboostLogo from '../../image/moodboost-logo.svg';
-import { Link, NavLink, useLocation} from 'react-router-dom';
+import { Link, NavLink, useHistory, useLocation} from 'react-router-dom';
 import { LIFE_ROUTE, MAINPOSTS_ROUTE, SEARCH_ROUTE } from '../../utils/consts';
 import {fetchPostCategory, fetchApiEmilCategories} from '../../http/categoryAPI'
 import {fetchApiEmil} from '../../http/postAPI';
@@ -10,17 +10,21 @@ import { fetchCreatePost } from "../../http/postAPI";
 import React, {useState, useContext} from 'react';
 import { Context } from "./../../index";
 import pers from '../../image/pers.svg'
+import menu from '../../image/menu.svg'
 
 
 const Header = observer(() => {
-    useEffect(() => {
-        fetchApiEmil().then(data => category.setEmilCategory(data.data.articles))
-    }, [])
+    // useEffect(() => {
+    //     fetchApiEmil().then(data => category.setEmilCategory(data.data.articles))
+    // }, [])
 
 const {category} = useContext(Context)
 const {post} = useContext(Context)
 const[file, setFile] = useState(null)
+const {user} = useContext(Context)
+const {admin} = useContext(Context)
 const {aside} = useContext(Context)
+const history = useHistory()
 
 // function createCategory () {
 //     const token = localStorage.getItem("adminToken")
@@ -145,6 +149,21 @@ function asideHendler () {
 aside.setIsAsideOpen()
 }
 
+function openAuth () {
+    if(admin.isAuth || user.isAuth) {
+        localStorage.removeItem('userToken')
+        admin.setIsAuth(false)
+        user.setIsAuth(false)
+    } else {
+        user.setOpenAuth(true)
+    }
+}
+
+console.log(aside.isAsideOpen)
+
+function exit () {
+    localStorage.removeItem('userToken')
+}
     return(
         <header className="header">
                 <nav className="header__navbar container">
@@ -152,6 +171,7 @@ aside.setIsAsideOpen()
                             <img className="header__logo" src={pers}/>
                              <img className="header__navbar_brand-image" src={moodboostLogo} />
                         </a>
+                        {/* <a href={MAINPOSTS_ROUTE} onClick={() => exit()}>выход</a> */}
                         {/* <ul id="catigories_menu" className="header__navbar_nav">
                             <li className="header__navbar_nav-link">
                                 <NavLink to={LIFE_ROUTE}  activeClassName="active" className="header__navbar_nav-link">
@@ -170,11 +190,14 @@ aside.setIsAsideOpen()
                             <li className="headr__navbar_menu-li header__navbar_menu-li_search">
                                 <Link to={SEARCH_ROUTE} className="header__navbar_menu-link"><i className="icon-search"></i></Link>
                             </li>
-                            {/* <li onClick={() => aside.setIsAsideOpen()} className="header__navbar_menu-li header__navbar_menu-li_toggler">
+                            <li onClick={() => openAuth()} className="header__navbar_menu__logn-in">
+                                <button  className="header__navbar_menu__logn-in_button">{admin.isAuth || user.isAuth ? "Exit" : "Log in"}</button>
+                            </li>
+                            <li onClick={() => asideHendler()} className="header__navbar_menu-li header__navbar_menu-li_toggler">
                                 <a href="#" id="sidebar_toggler" className="header__navbar_menu-link">
                                     <img src={menu} />
                                 </a>
-                            </li> */}
+                            </li>
                         </ul>
                 </nav>  
         </header>

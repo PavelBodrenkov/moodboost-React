@@ -8,23 +8,17 @@ const {
   getUserMe
 } = require('./../controllers/users');
 
-router.get('/', getUsers)
+// router.get('/', getUsers)
 
-router.get('/:id', celebrate({
-  params: Joi.object()
-    .keys({
-      id: Joi.string().required().length(24).hex(),
-    })
-    .unknown(true),
-}), getUserId)
+// router.get('/:id', celebrate({
+//   params: Joi.object()
+//     .keys({
+//       id: Joi.string().required().length(24).hex(),
+//     })
+//     .unknown(true),
+// }), getUserId)
 
-router.get('/me', celebrate({
-  params: Joi.object()
-    .keys({
-      id: Joi.string().required().length(24).hex(),
-    })
-    .unknown(true),
-}), getUserMe);
+router.get('/me', getUserMe);
 
 router.patch('/me', celebrate({
   params: Joi.object()

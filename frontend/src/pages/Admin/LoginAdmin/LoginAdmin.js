@@ -6,7 +6,6 @@ import { Context } from "../../../index";
 import {useHistory, Link} from 'react-router-dom'
 import {ADMIN_ROUTE} from '../../../utils/consts'
 
-
 const Login = observer(() => {
 
 const history = useHistory()
@@ -19,30 +18,32 @@ const {admin} = useContext(Context)
  const click = async (e) => {
      e.preventDefault()
      const response = await fetchLoginAdmin(email, password)
-     console.log(response)
+    
      if(response.data.token) {
         admin.setIsAuth(true)
         localStorage.setItem('adminToken', response.data.token)
         history.push(ADMIN_ROUTE)
      }
-     console.log(response)
  }
 
  //Проверка токена
  useEffect(() => {
-     console.log(localStorage.getItem("adminToken"))
-     if(localStorage.getItem("adminToken")) {
-        const token = localStorage.getItem("adminToken")
-        if(token) {
-            fetchAdminMe(token).then(res => {
-                if(res) {
-                    history.push(ADMIN_ROUTE)
-                    admin.setIsAuth(true)
-                }
-            })
-        }
-     }
+        if(localStorage.getItem("adminToken") !== null) {
+            const token = localStorage.getItem("adminToken")
+            if(token) {
+                fetchAdminMe(token).then(res => {
+                    console.log(res)
+                    if(res) {
+                        admin.setAdmin(res.data)
+                        history.push(ADMIN_ROUTE)
+                        admin.setIsAuth(true)
+                    }
+                })
+            }
+         }
  }, [admin.isAuth])
+
+ console.log(localStorage.getItem("adminToken"))
 
     return(
         <div className="login">

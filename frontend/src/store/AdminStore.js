@@ -25,6 +25,10 @@ export default class AdminStore {
         this._roles = roles
     }
 
+    setAdmin (data) {
+        this._admin = data
+    }
+
     get isAuth () {
         return this._isAuth
     }

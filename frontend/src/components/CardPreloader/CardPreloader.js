@@ -18,7 +18,7 @@ const CardPreloader = () => {
         </div>
              <h3 className="article-preview__title"></h3>
     </article>
-    <article className="article-preview card-loader">
+    {/* <article className="article-preview card-loader">
         <div className="article-actions">
         </div>
              <h3 className="article-preview__title"></h3>
@@ -62,7 +62,7 @@ const CardPreloader = () => {
         <div className="article-actions">
         </div>
              <h3 className="article-preview__title"></h3>
-    </article>
+    </article> */}
     </>
     )
    

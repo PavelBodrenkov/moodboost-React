@@ -13,22 +13,26 @@
     //height: 100%;
     //overflow-y: scroll;
     // will-change: transform;
+    background: #FFFFFF;
+    box-shadow: 0px 0px 4px rgba(80, 80, 80, 0.25);
+    border-radius: 10px;
     
    
 }
 
 .article-preview-middle__title {
     display: flex;
-    color: #000;
+    color: #101010;
     text-decoration: none;
+    font-weight: 500;
     font-size: 20px;
-    font-weight: 700;
-    line-height: 28px;
+    line-height: 23px;
     text-align: left;
+    padding: 20px 15px;
 }
 
 .article-preview-middle__photo {
-    border-radius: 10px;
+    border-radius: 8px;
     width: 100%;
     height: 176px;
     -o-object-fit: cover;

@@ -2,7 +2,7 @@ import { observer } from "mobx-react-lite";
 import './MainPosts.scss';
 import React, { useContext, useEffect, useState } from "react"
 import { Context } from "../../index";
-import { fetchPost, fetchApiEmil, fetchAllDeviceCategory } from "../../http/postAPI";
+import { fetchPost, fetchAllDeviceCategory } from "../../http/postAPI";
 import { fetchCategory } from "../../http/categoryAPI";
 import Main from '../../components/Main/Main';
 import Hashtags from '../../components/HashTags/Hashtags';
@@ -13,6 +13,9 @@ import SignUpWeekly from '../../components/SignUpWeekly/SignUpWeekly';
 const MainPosts = observer(() => {
     const {post} = useContext(Context)
     const {category} = useContext(Context)
+    const {aside} = useContext(Context)
+    // const {admin} = useContext(Context)
+    // const {comment} = useContext(Context)
     const[visib, setVisib] = useState(12)
     const [fetching, setFetching] = useState(false)
     const[isLoad, setIsLoad] = useState(false)
@@ -22,7 +25,7 @@ const MainPosts = observer(() => {
     useEffect(() => {
         const token = localStorage.getItem("adminToken")
         fetchCategory(token).then(data => category.setCategory(data.data))
-        fetchApiEmil().then(data => post.setGetEmilApi(data.data.articles))
+        // fetchApiEmil().then(data => post.setGetEmilApi(data.data.articles))
         fetchPost(token).then(data => post.setPosts(data.data))
 
     }, [])
@@ -42,7 +45,7 @@ const MainPosts = observer(() => {
                 })
             // }, 1500)
         }
-    }, [fetching, visib])
+    }, [fetching])
 
     useEffect(() => {
         document.addEventListener('scroll', scrollHendler)
@@ -66,6 +69,7 @@ const MainPosts = observer(() => {
         }
     }
 
+//Сортировка посток страницы Life
     useEffect(() => {
         const token = localStorage.getItem("adminToken")
         if(target) {
@@ -78,24 +82,24 @@ const MainPosts = observer(() => {
                 post.setPostSort(sortData)
             })
         }
-
     }, [category.selectedCategory._id, target])
-
+ 
 
     return(
         <div id="app_moodboost" className="container main-posts">
-            <div className="tags-list">
+            <div className={`tags-list ${aside.isAsideOpen && "openAside"}`}>
                 <Hashtags visibCategory={category.category} targetClick={targetClick} target={target}/> 
             </div>
             <div id="page">
-            {/* <Route excat path={POST_ROUTE + '/:id'} component={Post} /> */}
                 <main  className="feed">
             {location.pathname === ('/main') && <h4 className="feed__title">{`${!target? 'Life' : `Life-${category.selectedCategory.name}`}`}</h4>}
                     <Main  card={post.postSort} visib={visib} isLoad={isLoad} target={target}/>
                 </main>
                 <section id="sidebar" data-v-c1e3d870>
                     <div className="content-slidebar">
-                        <SignUpWeekly />
+                        <div className="sign-up-weekly-sidebar">
+                            <SignUpWeekly />
+                        </div>
                         {post.posts.slice(0, 12).map((card) => {
                                 return(
                                     <CardMiddle card={card} key={card._id}/>

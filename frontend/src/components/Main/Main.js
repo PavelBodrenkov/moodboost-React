@@ -1,29 +1,31 @@
 import './Main.scss';
 import Card from '../Card/Card';
-import SearchForm from '../SearchForm/SearchForm';
 import { observer } from 'mobx-react-lite';
-import { useContext, useEffect, useState } from 'react';
+import { Component, useContext, useEffect, useState } from 'react';
 import { Context } from '../..';
-import {fetchAllDeviceCategory} from '../../http/postAPI';
-import { fetchPost } from "../../http/postAPI";
-import { fetchCategory } from "../../http/categoryAPI";
 import CardPreloader from './../CardPreloader/CardPreloader'
-import CardMiddle from '../CardMiddle/CardMiddle';
-import {useLocation, Route } from 'react-router-dom';
+import {useLocation, Route, matchPath } from 'react-router-dom';
 import {POST_ROUTE} from '../../utils/consts';
 import Post from '../../pages/Post/Post';
+import SignUpWeekly from '../SignUpWeekly/SignUpWeekly';
+import Comments from '../Comments/Comments';
+import logoFooter from '../../image/logo-footer.svg';
 
-const Main = observer(({card, visib, isLoad, target}) => {
-    const {category} = useContext(Context)
-    const {post} = useContext(Context)
+const Main = observer(({card, visib, isLoad, target, }) => {
     const location = useLocation();
 
     return(
             <div className="feed__card">
-                <Route excat path={POST_ROUTE + '/:id'} component={Post} />
+                <Route excat path={POST_ROUTE + '/:id'} component={Post}/>
+               
+                { matchPath(location.pathname, { path: POST_ROUTE + '/:id' }) && 
+                    <div className="block-next-card">
+                        <p>Also on<img className="block-next-card__img" src={logoFooter}/></p>
+                    </div>
+                }
                     {card.slice(0, visib).map((onecCard) => {
                             return(  
-                            <Card target={target} card={onecCard} key={onecCard._id} />
+                            <Card card={onecCard} key={onecCard._id} />
                         )
                         })
                     }

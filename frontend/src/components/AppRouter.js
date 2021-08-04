@@ -3,7 +3,9 @@ import {Switch, Route, Redirect, useLocation, matchPath } from 'react-router-dom
 import { publicRoutes, AdminRout } from '../routes';
 import { MAINPOSTS_ROUTE } from '../utils/consts';
 import ProtectedRoute from './ProtectedRoute/ProtecredRiute';
-import Header from './Header/Header'
+import Header from './Header/Header';
+import PopupAuth from '../components/PopupAuth/PopupAuth';
+import ScrollUp from './scrollUp/ScroppUp';
 
 const AppRouter = () => {
 const[log, setLog] = useState(false)
@@ -18,6 +20,9 @@ const[log, setLog] = useState(false)
             setLog(true)
         }
     }, [location.pathname])
+
+    const[loginIn, setLoginIn] = useState(false)
+    const[signIn, setSignIn] = useState(false)
     
 
     return(
@@ -26,14 +31,6 @@ const[log, setLog] = useState(false)
        
     
         <Switch>
-            {/* <Route path="/" render={(props) => (props.location.pathname !== "/signinadmin") && 
-                <Header />}>
-            </Route> */}
-            {/* {user.isAuth === true && authRoutes.map(({path, Component}) => {
-                return(
-                    <Route key={path} path={path} component={Component} exact/>
-                )
-            })} */}
             {publicRoutes.map(({path, Component}) => {
                 return(
                     <Route key={path} path={path} component={Component}/>
@@ -46,7 +43,8 @@ const[log, setLog] = useState(false)
             <ProtectedRoute path={AdminRout[3].path} component={AdminRout[3].Component}/>  
             <Redirect to={MAINPOSTS_ROUTE} />
         </Switch>
-      
+        <PopupAuth />
+          <ScrollUp />
         </>
     )
 }

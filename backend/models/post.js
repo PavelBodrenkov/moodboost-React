@@ -25,6 +25,10 @@ const postSchema = mongoose.Schema({
         type: String,
         required: true
     },
+    commentCount: {
+        type: Number,
+        default: 0
+    },
     title: {
         type: String,
         default: null
@@ -37,6 +41,12 @@ const postSchema = mongoose.Schema({
         type: String,
         default:null
     },
+    likes:[
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            default:[]
+        }
+    ],
     body: {
         type: String,
         default: null
@@ -76,8 +86,26 @@ const postSchema = mongoose.Schema({
     updated_at: {
         type:Date,
         default: null
+    },
+   
+},
+// {
+//     timestamps: true
+// }
+)
+
+postSchema.statics = {
+    inCommentCount(postId) {
+        return this.findByIdAndUpdate(
+            postId,
+            {$inc: {commentCount: 1}},
+            {new: true}
+        )
     }
-})
+}
+
+
+
 
 module.exports = mongoose.model('posts', postSchema)
 

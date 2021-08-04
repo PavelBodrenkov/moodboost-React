@@ -1,4 +1,5 @@
 import {makeAutoObservable} from 'mobx'
+import {fetchDeleteLike, fetchAddLikes} from './../http/postAPI';
 
 export default class PostStore {
 
@@ -24,9 +25,28 @@ export default class PostStore {
       this._seoTitle = ''
       this._postCategiry = []
       this._postSort = []
+      this._isLiked = false
     makeAutoObservable(this)
     }
 
+    setIsLiked (card, userId, sort) {
+        const token = localStorage.getItem("adminToken")
+        const usertoken = localStorage.getItem("userToken")
+        const isLiked = card.likes.some((like) => like === userId)
+        const likeRequest = isLiked ? fetchDeleteLike(card._id, token === null ? usertoken : token) : fetchAddLikes(card._id, token === null ? usertoken : token)
+        likeRequest.then((newPost) => {
+            const newPosts = this._posts.map(item => 
+                item._id === card._id ? {...item, likes:newPost.data.likes} : item
+            )
+            if(sort == 1) {
+                this._postSort = newPosts.sort((a,b) => {
+                    return new Date(b.created_at) - new Date(a.created_at)
+                })
+            }
+        })
+    
+    }
+    
     setPostSort (post) {
         this._postSort = post
     }
@@ -178,5 +198,9 @@ export default class PostStore {
 
     get postSort () {
         return this._postSort
+    }
+
+    get isLiked () {
+        return  this._isLiked
     }
 }

@@ -4,7 +4,16 @@ export default class UserStore {
     constructor() {
         this._isAuth = false
         this._user = {}
+        this._openAuth = false
+        this._error = ''
         makeAutoObservable(this)
+    }
+
+    setUserError (message) {
+        this._error = message
+    }
+    setOpenAuth (bool) {
+        this._openAuth = bool
     }
 
     setIsAuth(bool) {
@@ -21,5 +30,13 @@ export default class UserStore {
 
     get user () {
         return this._user
+    }
+
+    get openAuth () {
+        return this._openAuth
+    }
+
+    get userError() {
+        return this._error
     }
 }

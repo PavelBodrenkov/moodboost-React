@@ -66,4 +66,27 @@ export const fetchEditPost = async(id, type, token) => {
     return data
 }
 
+export const fetchAddLikes = async(id, token) => {
+    const data = await $hostPost.put('posts' + '/likes' + '/' + id, null, {
+        headers: {
+            "Content-Type": "application/json",
+            authorization : `Bearer ${token}`
+            }
+    })
+    return data
+}
+
+export const fetchDeleteLike = async(id, token) => {
+    
+    const data = await $hostPost.delete('posts' + '/likes' + '/' + id, {
+        headers: {
+            "Content-Type": "application/json",
+            authorization : `Bearer ${token}`
+            }
+    })
+    return data
+}
+
+
+
 

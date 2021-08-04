@@ -26,9 +26,7 @@ export const fetchApiEmilCategories = async() => {
 
 //Логин Админки
 export const fetchLoginAdmin = async(email, password) => {
-    console.log('Привет')
     const login = await $hostLoginAdmin.post('signinadmin',{email, password})
-    console.log($hostLoginAdmin.post('signinadmin',{email, password}))
     return login
 }
 

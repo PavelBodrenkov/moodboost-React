@@ -20,7 +20,7 @@ const AdminPost = observer(() => {
                })
                     admin.setAdminPostSort(dataSort)
         })
-    }, [admin.adminPostSort])
+    }, [])
     
     function deletePost (id) {
         const token = localStorage.getItem("adminToken")

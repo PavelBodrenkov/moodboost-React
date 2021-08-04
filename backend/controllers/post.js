@@ -23,7 +23,18 @@ const getByCategoriesId = (req,res, next) => {
 
 const getPost = (req, res, next) => {
     Post.findById(req.params.id)
-    .then((post) => res.send(post))
+    .then((post) =>  {
+        Post.findByIdAndUpdate(
+            {_id: req.params.id},
+            {$inc: {views : 1}}
+        )
+         .then(item => {
+            console.log(item.views)
+           res.send(item)
+           
+         })
+         .catch(next)
+    })
     .catch(next)
 }
 
@@ -120,6 +131,38 @@ const updatePost = (req, res, next) => {
     .catch(next)
 }
 
+const likePost = (req, res, next) => {
+    const {id} = req.params
+    Post.findByIdAndUpdate(
+        id,
+        {$addToSet: { likes: req.user._id }},
+        { new:true }
+    )
+    .then((post) => {
+        if (!post) {
+            throw new NotFoundError('Нет поста с таким id');
+          }
+          return res.status(200).send(post);
+    })
+    .catch(next);
+}
+
+const dislikePost = (req, res, next) => {
+    const { id } = req.params;
+    Post.findByIdAndUpdate(
+        id, 
+        {$pull: {likes: req.user._id}},
+        { new: true }
+    )
+    .then((post) => {
+        if (!post) {
+            throw new NotFoundError('Нет поста с таким id');
+        }
+        return res.status(200).send(post);
+        })
+        .catch(next);
+}
+
 module.exports ={
     getByCategoriesId,
     createPost,
@@ -127,4 +170,6 @@ module.exports ={
     updatePost,
     getPosts,
     getPost,
+    likePost,
+    dislikePost
 }

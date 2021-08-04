@@ -1,18 +1,21 @@
-import React from "react"
+import React, {useContext} from "react"
 import './Admin.scss'
 import { Link, useLocation, useHistory } from 'react-router-dom';
 import AdminRole from "./AdminRole/AdminRole";
 import AdminCategory from './AdminCategory/AdminCategory';
 import {ADMIN_ROLE_ROURE, ADMIN_CATEGORY_ROUTE, ADMIN_POST_ROUTE} from '../../utils/consts'
 import AdmonPost from './AdminPost/AdminPost';
+import { Context } from "../../index";
 
 const Admin = () => {
     const location = useLocation()
     const history = useHistory()
+    const {admin} = useContext(Context)
     
     function exitAdmin() {
         localStorage.removeItem('adminToken')
         history.push('/')
+        admin.setIsAuth(false)
     }
 
     return(
