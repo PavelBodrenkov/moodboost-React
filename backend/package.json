@@ -6,8 +6,8 @@
   "scripts": {
     "test": "jest",
     "lint": "npx eslint . --ext .js",
-    "start": "node src/app.js",
-    "dev": "nodemon src/app.js"
+    "start": "node index.js",
+    "dev": "nodemon index.js"
   },
   "repository": {
     "type": "git",
